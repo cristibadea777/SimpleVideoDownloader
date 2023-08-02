@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Downloader</title>
+    <script>
+        function downloadVideo() {
+            document.getElementById('status').innerText = 'Downloading...';
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/download');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.responseType = 'blob';
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    document.getElementById('status').innerText = 'Finished.';
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(xhr.response);
+                    a.href = url;
+                    a.download = 'video.mp4';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                    document.getElementById('status').innerText = 'Error occurred.';
+                }
+            };
+
+            xhr.send('download=1');
+        }
+    </script>
+</head>
+<body>
+    <h1>Video Downloader</h1>
+    <button onclick="downloadVideo()">Download</button>
+    <p id="status"></p>
+</body>
+</html>
