@@ -15,7 +15,8 @@ const App = () => {
     const formData = new FormData();
     formData.append('link', link);
 
-    axios.post('http://127.0.0.1:5000/download/', formData, { responseType: 'blob' })
+    //axios.post('http://127.0.0.1:5000/download/', formData, { responseType: 'blob' })
+    axios.post('https://simple-video-downloader.onrender.com/download/', formData, { responseType: 'blob' })
     .then(response => {
       setStareDescarcare("Finished ")
       const video = window.URL.createObjectURL(new Blob([response.data]));
