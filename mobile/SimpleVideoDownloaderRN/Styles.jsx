@@ -64,6 +64,29 @@ const generareStiluri = ( culoareFundal, culoareTitlu ) => {
       padding: 12,
     },
 
+    containerTextInput: {
+      width: "65%", 
+      alignItems: "center", 
+      backgroundColor: "white",
+    },
+
+    containerLabelTextInput: {
+      width: "20%", 
+      alignItems: "center",
+    },
+
+    containerVideo: {
+      height: "50%",
+      width: "100%", 
+      backgroundColor: "cyan",
+      justifyContent: "center"
+  },
+
+  video: {
+    width: 300,
+    height: 200,
+  },
+
     text: {
       fontSize: 33,
     },
