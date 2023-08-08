@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__, static_folder='static')
 
-#pornit aplicatia pe 127.0.0.1:5000 -- python -m flask --app .\src\app.py run  -- decomentare penultima linie si comentare ultima linie
+#pornit aplicatia pe 127.0.0.1:5000 --- $ python -m flask --app .\src\app.py run  
 
 #pt cross origin 
 #intr-un CORS, doar headerul content-type este expus, celelalte trebuie expuse manual daca vrem sa le folosi
