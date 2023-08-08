@@ -4,25 +4,31 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faDownload, faPaste } from '@fortawesome/free-solid-svg-icons';
 import * as Clipboard from 'expo-clipboard';
-import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from "expo-sharing"
 import * as MediaLibrary from 'expo-media-library';
+import { preluareVideoAsync, salveazaVideoAsync } from './components/VideoDownloader';
+import { initializareFolderGalerie } from './components/Galerie';
 
 export default function App() {
   
   const [styles,              setStyles]            = useState('')
   const [stareDescarcare,     setStareDescarcare]   = useState('')
   const [link,                setLink]              = useState('')
-  const [videoBlob,           setVideoBlob]         = useState('')
+  const [fileName,            setFileName]          = useState('')
+  const [fileURI,             setFileURI]           = useState('')
   const [permissionResponse,  requestPermission]    = MediaLibrary.usePermissions();
+  const folderGalery                                = `${FileSystem.documentDirectory}galery/`
+
   //************************************************************//
 //************************************************************//
 //************************************************************//
 //TO DO 
+  //In backend de pus si extensia clipului in headere - se ia cu yt-dlp - ca sa o pun in URI
   //Functionalitate CUT - pe alt endpoint din API
   //Functioanalitate vizualizare galerie descarcata 
   //Functioalitate share clipuri din galerie, edit nume fisier, delete
+    //Meniu principal - 3 butoane pe centru - descarca video, taie video, galerie 
 //************************************************************//
 //************************************************************//
   //************************************************************//
@@ -30,41 +36,17 @@ export default function App() {
     () => {
       setStyles(generareStiluri("cyan", "black"))
       requestPermission()
+      initializareFolderGalerie(folderGalery)
     }, []
   )
 
   const handlePressButonDescarca = async () => {
-    setStareDescarcare("Downloading...");
-  
-    const formData = new FormData();
-    formData.append('link', link);
-
     try {
-      const response = await axios.post('https://simple-video-downloader.onrender.com/download/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        responseType: 'blob',
-      })
-      const fileName      = response.headers.get('Filename')
-      const fileLocation  = `${FileSystem.documentDirectory}${fileName}`
-      const file_reader   = new FileReader()
-      file_reader.readAsDataURL(response.data)
-      //event onload ce se asigura ca datele din raspuns au fost terminate de citit
-      file_reader.onload = async () => {
-        //dupa ce datele din raspuns au fost citite, se salveaza fisierul
-        await FileSystem.writeAsStringAsync(fileLocation, file_reader.result.split(',')[1], { encoding: FileSystem.EncodingType.Base64 })
-      }
-      //functionalitate de share a fisierului creat
-      Sharing.shareAsync(fileLocation) 
-      console.log('URI:', fileLocation)
-      setStareDescarcare("Finished downloading.")
+      await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare} )      
     } catch (error) {
       console.error('Error:', error);
     }
-    
   }
-
 
 
   const handlePressButonPaste = async () => {
@@ -72,10 +54,6 @@ export default function App() {
       const text = await Clipboard.getStringAsync();
       setLink(text)
     } catch (error) { console.log(error) }
-
-    console.log("/")
-    const imaginiBackupContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-    imaginiBackupContents.map((item) => {console.log("   /" + item)})
   }
 
   const handleChangeInputLink = (value) => {
@@ -131,7 +109,6 @@ export default function App() {
           </View>
         </View>
       </View>
-
     </View>
   );
 }
