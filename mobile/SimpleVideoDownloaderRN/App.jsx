@@ -1,4 +1,4 @@
-import { Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StatusBar, TextInput, TouchableOpacity, PermissionsAndroid } from 'react-native';
 import { generareStiluri } from './Styles';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -7,40 +7,33 @@ import * as Clipboard from 'expo-clipboard';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from "expo-sharing"
+import * as MediaLibrary from 'expo-media-library';
 
 export default function App() {
   
-  const [styles,            setStyles]            = useState('')
-  const [stareDescarcare,   setStareDescarcare]   = useState('')
-  const [link,              setLink]              = useState('')
-  const [videoBlob,         setVideoBlob]         = useState('')
-
+  const [styles,              setStyles]            = useState('')
+  const [stareDescarcare,     setStareDescarcare]   = useState('')
+  const [link,                setLink]              = useState('')
+  const [videoBlob,           setVideoBlob]         = useState('')
+  const [permissionResponse,  requestPermission]    = MediaLibrary.usePermissions();
+  //************************************************************//
+//************************************************************//
+//************************************************************//
+//TO DO 
+  //Functionalitate CUT - pe alt endpoint din API
+  //Functioanalitate vizualizare galerie descarcata 
+  //Functioalitate share clipuri din galerie, edit nume fisier, delete
+//************************************************************//
+//************************************************************//
+  //************************************************************//
   useEffect(
     () => {
       setStyles(generareStiluri("cyan", "black"))
+      requestPermission()
     }, []
   )
 
-
-
-
-
   const handlePressButonDescarca = async () => {
-
-/*
-    console.log("/...")
-    const contents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-    contents.map(
-        (item) => {
-          console.log("   /" + item)
-        }
-    )
-    await Sharing.shareAsync(`${FileSystem.documentDirectory}your_video_filename.mp4`)
-*/
-
-
-
-// /*
     setStareDescarcare("Downloading...");
   
     const formData = new FormData();
@@ -52,41 +45,25 @@ export default function App() {
           'Content-Type': 'multipart/form-data',
         },
         responseType: 'blob',
-      });
-
-      //console.log(typeof(response.data))
-      console.log(FileSystem.readAsStringAsync(response.data))
-
-      const filename = response.headers.get('Filename')
-
-      const fr = new FileReader();
-      fr.onload = async () => {
-        const fileUri = `${FileSystem.documentDirectory}/${filename}`;
-        await FileSystem.writeAsStringAsync(fileUri, fr.result.split(',')[1], { encoding: FileSystem.EncodingType.Base64 });
-        Sharing.shareAsync(fileUri);
-      };
-      fr.readAsDataURL(response.data);
-
-
-      console.log(fr.readAsDataURL(response.data))
-
-
-
-
-    setStareDescarcare("Finished downloading.")
-
+      })
+      const fileName      = response.headers.get('Filename')
+      const fileLocation  = `${FileSystem.documentDirectory}${fileName}`
+      const file_reader   = new FileReader()
+      file_reader.readAsDataURL(response.data)
+      //event onload ce se asigura ca datele din raspuns au fost terminate de citit
+      file_reader.onload = async () => {
+        //dupa ce datele din raspuns au fost citite, se salveaza fisierul
+        await FileSystem.writeAsStringAsync(fileLocation, file_reader.result.split(',')[1], { encoding: FileSystem.EncodingType.Base64 })
+      }
+      //functionalitate de share a fisierului creat
+      Sharing.shareAsync(fileLocation) 
+      console.log('URI:', fileLocation)
+      setStareDescarcare("Finished downloading.")
     } catch (error) {
-      console.error('Error sending request:', error);
+      console.error('Error:', error);
     }
-
-// */
-
     
   }
-
-
-
-
 
 
 
@@ -95,6 +72,10 @@ export default function App() {
       const text = await Clipboard.getStringAsync();
       setLink(text)
     } catch (error) { console.log(error) }
+
+    console.log("/")
+    const imaginiBackupContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
+    imaginiBackupContents.map((item) => {console.log("   /" + item)})
   }
 
   const handleChangeInputLink = (value) => {
