@@ -2,6 +2,7 @@ from flask import Flask, render_template, make_response, request
 import yt_dlp
 from flask_cors import CORS
 
+
 app = Flask(__name__, static_folder='static')
 
 #pornit aplicatia pe 127.0.0.1:5000 --- $ python -m flask --app .\src\app.py run  
@@ -31,7 +32,10 @@ def download():
                 
                 video_id = info_dict.get("id", None)
                 video_title = info_dict.get('title', None)
-                filename = video_title + " " + "[" + video_id + "]"
+                video_extension = info_dict.get('ext', None)
+                filename = video_title + " " + "[" + video_id + "]" + "." + video_extension
+
+                print(filename)
 
                 video_url = info_dict['url']
                 video_data = ydl.urlopen(video_url).read()
