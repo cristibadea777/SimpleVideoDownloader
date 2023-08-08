@@ -2,7 +2,9 @@ from flask import Flask, render_template, make_response, request
 import yt_dlp
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
+
+#pornit aplicatia pe 127.0.0.1:5000 -- python -m flask --app .\src\app.py run  -- decomentare penultima linie si comentare ultima linie
 
 #pt cross origin 
 #intr-un CORS, doar headerul content-type este expus, celelalte trebuie expuse manual daca vrem sa le folosi
@@ -10,7 +12,7 @@ CORS(app, expose_headers=['Filename'])
 
 @app.route("/", methods=['GET'])
 def home():
-    return "<h1>Creeaza cerere POST catre API-ul Flask (127.0.0.1:5000/download) cu atributul 'link' in Body ce tine url-ul clipului</h1>"
+    return render_template("index.html")
 
 @app.route("/download/", methods=['POST'])
 def download():
@@ -48,5 +50,5 @@ def download():
     return render_template('index.html', error=False)
 
 if __name__ == '__main__':
-    #app.run(debug=True)
+    #app.run(debug=True) 
     app.run(debug=False, host='0.0.0.0', port=5000) #pentru deploy
