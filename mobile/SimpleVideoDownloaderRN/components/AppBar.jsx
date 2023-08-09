@@ -2,34 +2,39 @@ import { faDownload, faFileVideo, faPhotoVideo, faScissors, faVideo } from "@for
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { TouchableOpacity, View } from "react-native"
 
-const AppBar = ({styles}) => {
+const AppBar = ({ styles, setVisibilityVideoDownload, setVisibilityCutVideo }) => {
 
     const handlePressButonTaie = () => {
+        setVisibilityCutVideo(true)
+        setVisibilityVideoDownload(false)
     }
 
     const handlePressButonDescarca = () => {
+        setVisibilityVideoDownload(true)
+        setVisibilityCutVideo(false)
     }
 
     const handlePressButonGalerie = () => {
+
+        setVisibilityVideoDownload(false)
     }
 
 
     return(
         <View style={styles.containerAppBar}>
 
+            <TouchableOpacity
+                style={styles.butonAppBar}
+                onPress={handlePressButonDescarca}
+            >
+                <FontAwesomeIcon icon={faDownload} color="white" size={50}/>
+            </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.butonAppBar}
                 onPress={handlePressButonTaie}
             >
                 <FontAwesomeIcon icon={faScissors} color="white" size={50}/>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.butonAppBar}
-                onPress={handlePressButonDescarca}
-            >
-                <FontAwesomeIcon icon={faDownload} color="white" size={50}/>
             </TouchableOpacity>
 
             <TouchableOpacity
