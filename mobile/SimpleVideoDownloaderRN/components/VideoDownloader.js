@@ -20,13 +20,9 @@ const descarcaVideoAsync = async ( {link, setStareDescarcare} ) => {
 
 const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI, setStareDescarcare} ) => {    
     setStareDescarcare("Saving...")
-
     const videoResponse = await descarcaVideoAsync({link, setStareDescarcare})
-
-    //extensia............
     const newFileName = videoResponse.headers.get('Filename')
-    const newFileURI  = `${folderGalery}${newFileName}` //+ extensia..........
-    
+    const newFileURI  = `${folderGalery}${newFileName}`//API-ul trimite si extensia, ca parte ca numelui fisierului
     //citire a raspunsului video si salvare cu writeAsStringAsync
     const file_reader   = new FileReader()
     file_reader.readAsDataURL(videoResponse.data)
@@ -35,11 +31,8 @@ const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI,
       //dupa ce datele din raspuns au fost citite, se salveaza fisierul
       await FileSystem.writeAsStringAsync(newFileURI, file_reader.result.split(',')[1], { encoding: FileSystem.EncodingType.Base64 })
     }
-
     setFileName(newFileName)
     setFileURI(newFileURI)      
     setStareDescarcare("Finished.")
 }
-
 export {descarcaVideoAsync, salveazaVideoAsync}
-

@@ -9,9 +9,17 @@ const generareStiluri = ( culoareFundal, culoareTitlu ) => {
       backgroundColor: culoareFundal,
     },
 
+    containerBara: {
+      width: "100%",
+      height: "7%",
+      justifyContent: "center", 
+      alignItems: "center", 
+      backgroundColor: "#11574a",
+    },
+
     titluContainer: {
         width: "100%", 
-        height: "15%",
+        height: "10%",
         justifyContent: "center", 
         alignItems: "center", 
     },
@@ -26,7 +34,7 @@ const generareStiluri = ( culoareFundal, culoareTitlu ) => {
         height: "20%",
         width: "100%", 
         backgroundColor: "cyan",
-        justifyContent: "center"
+        justifyContent: "center",
     },
 
     containerRowInput: {
@@ -46,14 +54,15 @@ const generareStiluri = ( culoareFundal, culoareTitlu ) => {
     containerRowDescarcare: {
       width: "100%", 
       height: "50%",
-      flexDirection: "row"
+      flexDirection: "row",
     },
 
     containerTextDescarca: {
       width: "50%", 
       height: "100%",
       justifyContent: "center",
-      alignItems: "center",
+      alignItems: "flex-start",
+      paddingLeft: 3
     },
 
     containerButonDescarca: {
@@ -72,20 +81,31 @@ const generareStiluri = ( culoareFundal, culoareTitlu ) => {
 
     containerLabelTextInput: {
       width: "20%", 
-      alignItems: "center",
+      alignItems: "flex-start",
+      paddingLeft: 3
     },
 
-    containerVideo: {
-      height: "50%",
+    containerRowTitluClip: {
       width: "100%", 
-      backgroundColor: "cyan",
-      justifyContent: "center"
-  },
+      height: "11%",
+      justifyContent: "center",
+      alignItems: "center",
+      paddingLeft: 3,
+      flexWrap: "wrap",
+      overflow:"hidden"
+    },
 
-  video: {
-    width: 300,
-    height: 200,
-  },
+    textTitluClip: {
+      fontSize: 24,
+      fontWeight: 'bold',
+    },
+
+    containerOutput: {
+      height: "33%",
+      width: "100%", 
+      justifyContent: "center",
+      alignItems: "center",
+    },
 
     text: {
       fontSize: 33,
