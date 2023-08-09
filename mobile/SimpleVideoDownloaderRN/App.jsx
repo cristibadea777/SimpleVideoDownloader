@@ -13,6 +13,7 @@ import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import { LogBox } from 'react-native'
+import AppBar from './components/AppBar'
 
 export default function App() {
   
@@ -30,19 +31,19 @@ export default function App() {
   const windowHeightLandscape  =   Dimensions.get('window').width;
 
 
-  //************************************************************//
+//************************************************************//
 //************************************************************//
 //************************************************************//
 //TO DO 
-  //In backend de pus si extensia clipului in headere - se ia cu yt-dlp - ca sa o pun in URI
   //Functionalitate CUT - pe alt endpoint din API
   //Functioanalitate vizualizare galerie descarcata 
   //Functioalitate share clipuri din galerie, edit nume fisier, delete
-    //Meniu principal - 3 butoane pe centru - descarca video, taie video, galerie 
+  //Meniu principal - 3 butoane pe centru - descarca video, taie video, galerie 
 //************************************************************//
 //************************************************************//
-  //************************************************************//
-  useEffect(
+//************************************************************//
+
+useEffect(
     () => {
       setStyles(generareStiluri("cyan", "black"))
       requestPermission()
@@ -77,7 +78,7 @@ export default function App() {
   const handleChangeInputLink = (value) => {
     setLink(value)
   }
-  
+
 
   useEffect(
     () => {
@@ -103,9 +104,9 @@ export default function App() {
       {
       !inFullscreen && (
       <>
-      <View style={styles.containerBara}>
-        <Text>App bar ...</Text>
-      </View>
+      <AppBar 
+        styles  = {styles}
+      />
       <View style={styles.titluContainer}>
         <Text style={styles.titluText}>Video Downloader</Text>
       </View>

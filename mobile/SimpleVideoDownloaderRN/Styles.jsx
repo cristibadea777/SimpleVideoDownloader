@@ -9,12 +9,18 @@ const generareStiluri = ( culoareFundal, culoareTitlu ) => {
       backgroundColor: culoareFundal,
     },
 
-    containerBara: {
+    containerAppBar: {
       width: "100%",
       height: "7%",
-      justifyContent: "center", 
+      justifyContent: "flex-end", 
       alignItems: "center", 
       backgroundColor: "#11574a",
+      flexDirection: "row",
+    },
+
+    butonAppBar: {
+      padding: 33,
+      paddingRight: 12 
     },
 
     titluContainer: {
