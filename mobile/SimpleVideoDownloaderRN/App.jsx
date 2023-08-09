@@ -10,7 +10,6 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 
 import VideoDownload from './components/VideoDownload'
 import AppBar from './components/AppBar'
-import VideoCut from './components/VideoCut'
 
 export default function App() {
   
@@ -74,6 +73,14 @@ export default function App() {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
   }
 
+  const handlePressButonDescarca = async () => {
+    setFileURI(null)
+    setFileName(null)
+    try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare} ) } 
+    catch (error) { console.error('Error:', error) }
+}
+
+
   return (
     <View style={styles.containerPrincipal}>
        <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
@@ -92,10 +99,12 @@ export default function App() {
             windowWidthLandscape            = {windowWidthLandscape}
             visibilityVideoDownload         = {visibilityVideoDownload}
             styles                          = {styles}
+            visibilityCutVideo              = {visibilityCutVideo}
             inFullscreen                    = {inFullscreen}
             link                            = {link}
             handleChangeInputLink           = {handleChangeInputLink}
             handlePressButonPaste           = {handlePressButonPaste}
+            handlePressButonDescarca        = {handlePressButonDescarca}
             stareDescarcare                 = {stareDescarcare}
             fileName                        = {fileName}
             fileURI                         = {fileURI}
@@ -104,10 +113,7 @@ export default function App() {
             folderGalery                    = {folderGalery}
             setStareDescarcare              = {setStareDescarcare}
             setInFullsreen                  = {setInFullsreen}
-          /> ) 
-        : visibilityCutVideo ? (
-          <VideoCut></VideoCut>
-        ) 
+          /> )  
         : (
           <></>
         )

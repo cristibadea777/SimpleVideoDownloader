@@ -6,7 +6,7 @@ const AppBar = ({ styles, setVisibilityVideoDownload, setVisibilityCutVideo }) =
 
     const handlePressButonTaie = () => {
         setVisibilityCutVideo(true)
-        setVisibilityVideoDownload(false)
+        setVisibilityVideoDownload(true)
     }
 
     const handlePressButonDescarca = () => {
@@ -19,31 +19,20 @@ const AppBar = ({ styles, setVisibilityVideoDownload, setVisibilityCutVideo }) =
         setVisibilityVideoDownload(false)
     }
 
-
     return(
         <View style={styles.containerAppBar}>
 
-            <TouchableOpacity
-                style={styles.butonAppBar}
-                onPress={handlePressButonDescarca}
-            >
-                <FontAwesomeIcon icon={faDownload} color="white" size={50}/>
+            <TouchableOpacity    style={styles.butonAppBar}     onPress={handlePressButonDescarca}>
+                <FontAwesomeIcon icon={faDownload}              color="white" size={50}/>
             </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.butonAppBar}
-                onPress={handlePressButonTaie}
-            >
-                <FontAwesomeIcon icon={faScissors} color="white" size={50}/>
+            <TouchableOpacity    style={styles.butonAppBar}     onPress={handlePressButonTaie}>
+                <FontAwesomeIcon icon={faScissors}              color="white" size={50}/>
             </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.butonAppBar}
-                onPress={handlePressButonGalerie}
-            >
-                <FontAwesomeIcon icon={faPhotoVideo} color="white" size={50}/>
+            <TouchableOpacity    style={styles.butonAppBar}     onPress={handlePressButonGalerie}>
+                <FontAwesomeIcon icon={faPhotoVideo}            color="white" size={50}/>
             </TouchableOpacity>
-
 
         </View>
     )

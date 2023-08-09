@@ -5,18 +5,11 @@ import { salveazaVideoAsync } from './VideoDownloader'
 import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
 
-const VideoDownload = ({ visibilityVideoDownload, styles, inFullscreen, link, handleChangeInputLink, handlePressButonPaste, stareDescarcare,
-                              fileName, fileURI, setFileURI, setFileName, folderGalery, setStareDescarcare, setInFullsreen,
-                              changeScreenOrientationLanscape, changeScreenOrientationPortrait, windowWidthLandscape, windowHeightLandscape
+const VideoDownload = ({    styles, visibilityCutVideo, inFullscreen, link, handleChangeInputLink, handlePressButonPaste, stareDescarcare,
+                            fileName, fileURI, setFileURI, setFileName, folderGalery, setStareDescarcare, setInFullsreen, handlePressButonDescarca,
+                            changeScreenOrientationLanscape, changeScreenOrientationPortrait, windowWidthLandscape, windowHeightLandscape
                        }) => {
     
-    const handlePressButonDescarca = async () => {
-        setFileURI(null)
-        setFileName(null)
-        try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare} ) } 
-        catch (error) { console.error('Error:', error) }
-    }
-
     return (
         <View style={styles.containerPrincipal}>
             <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
@@ -24,7 +17,7 @@ const VideoDownload = ({ visibilityVideoDownload, styles, inFullscreen, link, ha
             !inFullscreen && (
             <>
             <View style={styles.titluContainer}>
-            <Text style={styles.titluText}>Download Video</Text>
+            <Text style={styles.titluText}>{visibilityCutVideo ? "Cut and Download Video" : "Download Video"}</Text>
             </View>
             <View style={styles.containerInput}>
 
