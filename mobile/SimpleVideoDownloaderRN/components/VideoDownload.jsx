@@ -12,57 +12,64 @@ const VideoDownload = ({    styles, visibilityCutVideo, inFullscreen, link, hand
     
     return (
         <View style={styles.containerPrincipal}>
-            <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
             {
             !inFullscreen && (
             <>
             <View style={styles.titluContainer}>
-            <Text style={styles.titluText}>{visibilityCutVideo ? "Cut and Download Video" : "Download Video"}</Text>
+                <Text style={styles.titluText}>{visibilityCutVideo ? "Cut and Download Video" : "Download Video"}</Text>
             </View>
-            <View style={styles.containerInput}>
 
-            <View style={styles.containerRowInput}>
-                <View style={styles.containerLabelTextInput}>
-                <Text style={styles.text}>Link</Text>
+            <View style={[styles.containerInput, {height: ! visibilityCutVideo ? "50%" : "50%"}]}>
+                <View style={styles.containerRowInput}>
+                    <View style={styles.containerLabelTextInput}>
+                    <Text style={styles.text}>Link</Text>
+                    </View>
+                    <View style={styles.containerTextInput}>
+                    <TextInput 
+                        style={styles.textInput}
+                        value={link}
+                        onChangeText={handleChangeInputLink}
+                    />
+                    </View>
+                    <View style={styles.containerButonPaste}>
+                        <TouchableOpacity    style={styles.butonPaste}      onPress={handlePressButonPaste}>
+                            <FontAwesomeIcon icon={faPaste}                 size={33} color='black'/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={styles.containerTextInput}>
-                <TextInput 
-                    style={styles.textInput}
-                    value={link}
-                    onChangeText={handleChangeInputLink}
-                />
+
+                {
+                visibilityCutVideo && (
+                    <View style={styles.containerRowInputParti}>
+                        <Text> FROM </Text>
+                        <Text> TO </Text>
+                    </View>
+                )
+                }
+
+                <View style={{height: "33%", flexDirection: "column", backgroundColor: "white"}}>
+                    <View style={styles.containerRowDescarcare}>
+                        <View style={styles.containerTextDescarca}>
+                            <Text style={styles.text}>{stareDescarcare}</Text>
+                        </View>
+                        <View style={styles.containerButonDescarca}>
+                            <TouchableOpacity    style={styles.butonDescarca}   onPress={handlePressButonDescarca}>
+                                <FontAwesomeIcon icon={faDownload}              size={40} color='black'/>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.containerButonPaste}>
-                <TouchableOpacity 
-                    style={styles.butonPaste}
-                    onPress={handlePressButonPaste}
-                >
-                    <FontAwesomeIcon icon={faPaste} size={33} color='black'/>
-                </TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.containerRowDescarcare}>
-                <View style={styles.containerTextDescarca}>
-                <Text style={styles.text}>{stareDescarcare}</Text>
-                </View>
-                <View style={styles.containerButonDescarca}>
-                <TouchableOpacity 
-                    style={styles.butonDescarca}
-                    onPress={handlePressButonDescarca}
-                >
-                    <FontAwesomeIcon icon={faDownload} size={40} color='black'/>
-                </TouchableOpacity>
-                </View>
-            </View>
+
             </View>  
             <View style={styles.containerRowTitluClip}>
-                <Text style={styles.textTitluClip}>{fileName}</Text>
+                        <Text style={styles.textTitluClip}>{fileName}</Text>
             </View>
+
             </>
             )
             }
 
-            <View style={[styles.containerOutput, {height: inFullscreen ? "100%" : "33%", backgroundColor: inFullscreen ? "black" : "cyan"}]} >
+            <View style={[styles.containerOutput, {height: inFullscreen ? "100%" : "40%", backgroundColor: inFullscreen ? "black" : "red"}]} >
             {
             fileURI && (
             <VideoPlayer

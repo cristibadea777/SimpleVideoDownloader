@@ -1,21 +1,39 @@
-import { View, StatusBar, Dimensions } from 'react-native'
+import { View, StatusBar, Dimensions, Text, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { generareStiluri } from './Styles'
 import { useEffect, useState } from 'react'
 import { initializareFolderGalerie } from './components/Galerie'
 import { LogBox } from 'react-native'
-import * as Clipboard from 'expo-clipboard'
 import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library'
 import * as ScreenOrientation from 'expo-screen-orientation'
 
 import VideoDownload from './components/VideoDownload'
-import AppBar from './components/AppBar'
+import AppBar from './components/AppBarTitlu'
+import { salveazaVideoAsync } from './components/VideoDownloader'
+import Test1 from './components/Test1'
+import AppBarTitlu from './components/AppBarTitlu'
+import { generareStiluriAppBarTitlu } from './components/appbar-titlu/Styles'
+import ContainerInput from './components/input/ContainerInput'
+import { generareStiluriContainerInput } from './components/input/Styles'
+import StareDescarcare from './components/stare-descarcare/StareDescarcare'
+import { generareStiluriStareDescarcare } from './components/stare-descarcare/Styles'
+import { generareStiluriPlayerVideo } from './components/player-video/Styles'
+import PlayerVideo from './components/player-video/PlayerVideo'
 
 export default function App() {
   
   LogBox.ignoreLogs(['new NativeEventEmitter'])
 
-  const [styles,              setStyles]            = useState('')
+  const [styles,                setStyles]                = useState('')
+  const [stylesAppBarTitlu,     setStylesAppBarTitlu]     = useState('')
+  const [stylesContainerInput,  setStylesContainerInput]  = useState('')
+  const [stylesStareDescarcare, setStylesStareDescarcare] = useState('')
+  const [stylesPlayerVideo,     setStylesPlayerVideo]     = useState('')
+
+  const [culoareTitlu,          setCuloareTitlu]          = useState('#11574a')
+  const [culoarePictograme,     setCuloarePictograme]     = useState('white')
+  const [culoareFundal,         setCuloareFundal]         = useState("cyan")
+
   const [stareDescarcare,     setStareDescarcare]   = useState('')
   const [link,                setLink]              = useState('')
   const [fileName,            setFileName]          = useState('')
@@ -43,6 +61,10 @@ export default function App() {
   useEffect(
     () => {
       setStyles(generareStiluri("cyan", "black"))
+      setStylesAppBarTitlu(generareStiluriAppBarTitlu( culoareTitlu, culoarePictograme ))
+      setStylesContainerInput(generareStiluriContainerInput( culoareFundal, culoarePictograme ))
+      setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme ) )
+      setStylesPlayerVideo(generareStiluriPlayerVideo(culoareTitlu, culoarePictograme) )
       requestPermission()
       initializareFolderGalerie(folderGalery)
     }, []
@@ -54,17 +76,6 @@ export default function App() {
     }, [inFullscreen]
   )
 
-  const handlePressButonPaste = async () => {
-    try {
-      const text = await Clipboard.getStringAsync();
-      setLink(text)
-    } catch (error) { console.log(error) }
-  }
-
-  const handleChangeInputLink = (value) => {
-    setLink(value)
-  }
-
   const [inFullscreen, setInFullsreen] = useState(false)
   const changeScreenOrientationLanscape = async () => {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -73,23 +84,45 @@ export default function App() {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
   }
 
-  const handlePressButonDescarca = async () => {
-    setFileURI(null)
-    setFileName(null)
-    try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare} ) } 
-    catch (error) { console.error('Error:', error) }
-}
-
 
   return (
-    <View style={styles.containerPrincipal}>
-       <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
-        <AppBar 
-          styles                      = {styles}
-          setVisibilityVideoDownload  = {setVisibilityVideoDownload}
-          setVisibilityCutVideo       = {setVisibilityCutVideo}
-        />
+    <KeyboardAvoidingView behavior={"height"} enabled style={{ flex: 1 }}>
+      <ScrollView style={styles.containerPrincipal} contentContainerStyle={{ flexGrow: 1 }}>
+        <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
+          {! inFullscreen && (
+          <>
+            <AppBarTitlu
+              styles                      = {stylesAppBarTitlu}
+              setVisibilityVideoDownload  = {setVisibilityVideoDownload}
+              setVisibilityCutVideo       = {setVisibilityCutVideo}
+              visibilityCutVideo          = {visibilityCutVideo}
+            />
 
+            <ContainerInput
+              styles                      = {stylesContainerInput}   
+              link                        = {link}
+              setLink                     = {setLink}
+              visibilityVideoDownload     = {visibilityVideoDownload}       
+            />
+
+            <StareDescarcare
+              styles                      = {stylesStareDescarcare}
+              stareDescarcare             = {stareDescarcare}
+            />
+
+            <PlayerVideo 
+              styles                      = {stylesPlayerVideo}
+              fileName                    = {fileName}
+              culoarePictograme           = {culoarePictograme}
+            />
+          </>
+          )}
+      </ScrollView>
+  </KeyboardAvoidingView>
+  );
+}
+
+/*
         {
         visibilityVideoDownload ? (
           <VideoDownload
@@ -118,6 +151,4 @@ export default function App() {
           <></>
         )
         }
-  </View>
-  );
-}
+*/
