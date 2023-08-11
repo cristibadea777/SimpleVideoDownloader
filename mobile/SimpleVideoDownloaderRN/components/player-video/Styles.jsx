@@ -1,18 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-const generareStiluriPlayerVideo = ( culoareFundal, culoarePictograme ) => {
+const generareStiluriPlayerVideo = ( culoareFundal, culoarePictograme, culoareTitlu ) => {
 
   return StyleSheet.create({
-    
-    textTitluPlayerVideo: {
-        fontSize: 18,
-        fontWeight: 'bold',
-      },
-
       
     containerTitluPlayerVideo: {
         width: "100%", 
-        height: "12%",
+        height: "17%",
         justifyContent: "center",
         alignItems: "center",
         paddingLeft: 3,
@@ -21,8 +15,23 @@ const generareStiluriPlayerVideo = ( culoareFundal, culoarePictograme ) => {
         backgroundColor: "white",
         borderBlockColor: "yellow", 
         borderWidth: 5
-      },
+    },
+    
+    containerVideo: {
+      height: "40%",
+      borderColor: "white",
+      borderWidth: 5,
+      width: "100%", 
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: culoareFundal
+    },
 
+    textTitluPlayerVideo: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: culoareTitlu
+    },
 
   })
 }

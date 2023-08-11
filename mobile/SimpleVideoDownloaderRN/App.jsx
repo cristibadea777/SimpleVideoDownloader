@@ -10,7 +10,6 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 import VideoDownload from './components/VideoDownload'
 import AppBar from './components/AppBarTitlu'
 import { salveazaVideoAsync } from './components/VideoDownloader'
-import Test1 from './components/Test1'
 import AppBarTitlu from './components/AppBarTitlu'
 import { generareStiluriAppBarTitlu } from './components/appbar-titlu/Styles'
 import ContainerInput from './components/input/ContainerInput'
@@ -18,7 +17,7 @@ import { generareStiluriContainerInput } from './components/input/Styles'
 import StareDescarcare from './components/stare-descarcare/StareDescarcare'
 import { generareStiluriStareDescarcare } from './components/stare-descarcare/Styles'
 import { generareStiluriPlayerVideo } from './components/player-video/Styles'
-import PlayerVideo from './components/player-video/PlayerVideo'
+import ContainerVideo from './components/player-video/ContainerVideo'
 
 export default function App() {
   
@@ -40,7 +39,7 @@ export default function App() {
   const [fileURI,             setFileURI]           = useState('')
   const [permissionResponse,  requestPermission]    = MediaLibrary.usePermissions();
   
-  const folderGalery           = `${FileSystem.documentDirectory}galery/`
+  const folderGalery           =   `${FileSystem.documentDirectory}galery/`
   const windowWidthLandscape   =   Dimensions.get('window').height;
   const windowHeightLandscape  =   Dimensions.get('window').width;
 
@@ -64,7 +63,7 @@ export default function App() {
       setStylesAppBarTitlu(generareStiluriAppBarTitlu( culoareTitlu, culoarePictograme ))
       setStylesContainerInput(generareStiluriContainerInput( culoareFundal, culoarePictograme ))
       setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme ) )
-      setStylesPlayerVideo(generareStiluriPlayerVideo(culoareTitlu, culoarePictograme) )
+      setStylesPlayerVideo(generareStiluriPlayerVideo(culoareFundal, culoarePictograme, culoareTitlu) )
       requestPermission()
       initializareFolderGalerie(folderGalery)
     }, []
@@ -110,10 +109,11 @@ export default function App() {
               stareDescarcare             = {stareDescarcare}
             />
 
-            <PlayerVideo 
+            <ContainerVideo 
               styles                      = {stylesPlayerVideo}
               fileName                    = {fileName}
               culoarePictograme           = {culoarePictograme}
+              visibilityVideoDownload     = {visibilityVideoDownload}
             />
           </>
           )}

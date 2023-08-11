@@ -1,9 +1,8 @@
-import { View } from "react-native"
+import { Text, View } from "react-native"
 
 const Player = ( {styles} ) => {
     return(
-        <View style={st}>
-
+        <View style={styles.containerVideo}>
         </View>
     )
 }
