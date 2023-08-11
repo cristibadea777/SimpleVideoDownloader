@@ -70,6 +70,66 @@ const generareStiluriContainerInput = ( culoareFundal, culoarePictograme ) => {
         color: culoarePictograme
     },
 
+    containerInputDurata: {
+      backgroundColor: "white", 
+      width: "100%", 
+      height: "70%", 
+      borderColor: "black", 
+      borderWidth: 5
+    },
+
+    containerRowInput: {
+      backgroundColor: "cyan", 
+      width: "100%", 
+      height: "50%", 
+      flexDirection: "row"
+    },
+
+    containerLeftInputTimp: {
+      width: "30%", 
+      backgroundColor: "cyan", 
+      justifyContent: "center"
+    },
+
+    containerRightInputTimp: {
+      width: "67%", 
+      backgroundColor: "cyan", 
+      justifyContent: "center", 
+      flexDirection: "row"
+    },
+
+    containerLabelnput: {
+      backgroundColor: "cyan", 
+      width: "33%", 
+      flexDirection: "row"
+    },
+
+    containerLabel: {
+      width: "40%", 
+      backgroundColor: "cyan", 
+      justifyContent: "center", 
+      alignItems: "center"
+    },
+
+    label: {
+      fontSize: 18, 
+      fontWeight: "bold"
+    },
+
+    containerCasutaInput: {
+      width: "50%", 
+      alignItems: "center", 
+      justifyContent: "center"
+    },
+
+    casutaInput: {
+      height: "50%", 
+      width: "100%", 
+      backgroundColor: "white", 
+      textAlign: "center", 
+      fontSize: 17
+    },
+
   })
 }
 export{ generareStiluriContainerInput }

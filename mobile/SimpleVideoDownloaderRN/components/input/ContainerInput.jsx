@@ -2,7 +2,7 @@ import { View } from "react-native"
 import InputLink from "./InputLink"
 import InputDurata from "./InputDurata"
 
-const ContainerInput = ( {styles, link, setLink, visibilityCutVideo} ) => {
+const ContainerInput = ( {styles, link, setLink, visibilityCutVideo, oraStart, minutStart, secundaStart, oraEnd, minutEnd, secundaEnd, setOraStart, setMinutStart, setSecundaStart, setOraEnd, setMinutEnd, setSecundaEnd} ) => {
     return(
         <View style={[styles.containerInput, {height: visibilityCutVideo ? "30%" : "10%"}]}>
             <InputLink 

@@ -1,5 +1,4 @@
 import { StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native'
-import { generareStiluri } from './Styles'
 import { useEffect, useState } from 'react'
 import { initializareFolderGalerie } from './components/Galerie'
 import { LogBox } from 'react-native'
@@ -42,6 +41,14 @@ export default function App() {
 
   const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(false)
   const [visibilityCutVideo,      setVisibilityCutVideo]      = useState(false)
+  const [inFullscreen,            setInFullsreen]             = useState(false)
+
+  const [oraStart,      setOraStart]        = useState('00')
+  const [minutStart,    setMinutStart]      = useStare('00')
+  const [secundaStart,  setSecundaStart]    = useState('00')
+  const [oraEnd,        setOraEnd]          = useState('00')
+  const [minutEnd,      setMinutEnd]        = useStare('00')
+  const [secundaEnd,    setSecundaEnd]      = useState('00')
 
 //************************************************************//
 //************************************************************//
@@ -56,7 +63,6 @@ export default function App() {
 
   useEffect(
     () => {
-      setStyles(generareStiluri("cyan", "black"))
       setStylesAppBarTitlu(generareStiluriAppBarTitlu( culoareTitlu, culoarePictograme ))
       setStylesContainerInput(generareStiluriContainerInput( culoareFundal, culoarePictograme ))
       setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme ) )
@@ -67,71 +73,68 @@ export default function App() {
     }, []
   )
 
-  const [inFullscreen, setInFullsreen] = useState(false)
-
-  useEffect(
-    () => {
-      setStyles(generareStiluri("cyan", "black", inFullscreen))
-    }, [inFullscreen]
-  )
-
   
-  return ( <>
-  {! inFullscreen ? (
-      <KeyboardAvoidingView behavior={"height"} enabled style={{ flex: 1 }}>
-      <ScrollView style={styles.containerPrincipal} contentContainerStyle={{ flexGrow: 1 }}>
-        <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
-          
-          <>
-            <AppBarTitlu
-              styles                      = {stylesAppBarTitlu}
-              setVisibilityVideoDownload  = {setVisibilityVideoDownload}
-              setVisibilityCutVideo       = {setVisibilityCutVideo}
-              visibilityCutVideo          = {visibilityCutVideo}
-            />
-
-            <ContainerInput
-              styles                      = {stylesContainerInput}   
-              link                        = {link}
-              setLink                     = {setLink}
-              visibilityCutVideo          = {visibilityCutVideo}       
-            />
-
-            <ContainerDescarcare
-              styles                      = {stylesStareDescarcare}
-              stareDescarcare             = {stareDescarcare}
-              link                        = {link}
-              folderGalery                = {folderGalery}
-              setFileName                 = {setFileName}
-              setFileURI                  = {setFileURI}
-              setStareDescarcare          = {setStareDescarcare}
-              visibilityCutVideo          = {visibilityCutVideo}
-
-            />
-
-            <ContainerVideo 
-              styles                      = {stylesPlayerVideo}
-              fileName                    = {fileName}
-              culoarePictograme           = {culoarePictograme}
-              visibilityCutVideo          = {visibilityCutVideo}
-              fileURI                     = {fileURI}
-              inFullscreen                = {inFullscreen}
-              setInFullsreen              = {setInFullsreen}
-            />
-          </>
-           
-      </ScrollView>
-  </KeyboardAvoidingView>
-    
-    ) : (
-      <Video 
-        styles              =   {stylesVideoFullScreen}
-        visibilityCutVideo  =   {visibilityCutVideo}
-        fileURI             =   {fileURI}
-        inFullscreen        =   {inFullscreen}
-        setInFullsreen      =   {setInFullsreen}
-      />
-    )
-    }
-</>)
+  return ( 
+    <>
+      { ! inFullscreen ? (
+          <KeyboardAvoidingView behavior={"height"} enabled style={{ flex: 1 }}>
+            <ScrollView style={styles.containerPrincipal} contentContainerStyle={{ flexGrow: 1 }}>
+              <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>              
+              <AppBarTitlu
+                styles                      = {stylesAppBarTitlu}
+                setVisibilityVideoDownload  = {setVisibilityVideoDownload}
+                setVisibilityCutVideo       = {setVisibilityCutVideo}
+                visibilityCutVideo          = {visibilityCutVideo}
+              />
+              <ContainerInput
+                styles                      = {stylesContainerInput}   
+                link                        = {link}
+                setLink                     = {setLink}
+                visibilityCutVideo          = {visibilityCutVideo}
+                oraStart                    = {oraStart}
+                oraEnd                      = {oraEnd}
+                setOraStart                 = {setOraStart}
+                setOraEnd                   = {setOraEnd}
+                minutStart                  = {minutStart}
+                minutEnd                    = {minutEnd}
+                setMinutStart               = {setMinutStart}
+                setMinutEnd                 = {setMinutEnd}
+                secundaStart                = {secundaStart}
+                secundaEnd                  = {secundaEnd}
+                setSecundaStart             = {setSecundaStart}
+                setSecundaEnd               = {setSecundaEnd}     
+              />
+              <ContainerDescarcare
+                styles                      = {stylesStareDescarcare}
+                stareDescarcare             = {stareDescarcare}
+                link                        = {link}
+                folderGalery                = {folderGalery}
+                setFileName                 = {setFileName}
+                setFileURI                  = {setFileURI}
+                setStareDescarcare          = {setStareDescarcare}
+                visibilityCutVideo          = {visibilityCutVideo}
+              />
+              <ContainerVideo 
+                styles                      = {stylesPlayerVideo}
+                fileName                    = {fileName}
+                culoarePictograme           = {culoarePictograme}
+                visibilityCutVideo          = {visibilityCutVideo}
+                fileURI                     = {fileURI}
+                inFullscreen                = {inFullscreen}
+                setInFullsreen              = {setInFullsreen}
+              /> 
+            </ScrollView>
+          </KeyboardAvoidingView>  
+        ) : (
+          <Video  
+            styles              =   {stylesVideoFullScreen}
+            visibilityCutVideo  =   {visibilityCutVideo}
+            fileURI             =   {fileURI}
+            inFullscreen        =   {inFullscreen}
+            setInFullsreen      =   {setInFullsreen}
+          />
+        )
+       }
+    </>
+  )
 }

@@ -1,68 +1,106 @@
 import { Text, TextInput, View } from "react-native"
 
-const InputDurata = ( {styles} ) => {
+const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minutEnd, secundaEnd, setOraStart, 
+                        setMinutStart, setSecundaStart, setOraEnd, setMinutEnd, setSecundaEnd} ) => {
     return (
-        <View style={{backgroundColor: "white", width: "100%", height: "70%", borderColor: "black", borderWidth: 5}}>
-            <View style={{backgroundColor: "cyan", width: "100%", height: "50%", flexDirection: "row"}}>
-                <View style={{width: "30%", backgroundColor: "cyan", justifyContent: "center"}}>
+        <View style={styles.containerInputDurata}>
+
+            <View style={styles.containerRowInput}>
+                <View style={styles.containerLeftInputTimp}>
                     <Text style={styles.text2}>Start time</Text>
                 </View>
-                <View style={{width: "67%", backgroundColor: "cyan", justifyContent: "center", flexDirection: "row"}}>
-                    <View style={{backgroundColor: "cyan", width: "33%", flexDirection: "row"}}>
-                        <View style={{width: "40%", backgroundColor: "cyan", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 18, fontWeight: "bold"}}>hh</Text>
+                <View style={styles.containerRightInputTimp}>
+                    <View style={styles.containerLabelnput}>
+                        <View style={styles.containerLabel}>
+                            <Text style={styles.label}>hh</Text>
                         </View>
-                        <View style={{width: "50%", alignItems: "center", justifyContent: "center"}}>
-                            <TextInput keyboardType={"numeric"} maxLength={2} style={{height: "50%", width: "100%", backgroundColor: "white", textAlign: "center", fontSize: 17}}/>
-                        </View>
-                    </View>
-                    <View style={{backgroundColor: "cyan", width: "33%", flexDirection: "row"}}>
-                        <View style={{width: "40%", backgroundColor: "cyan", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 18, fontWeight: "bold"}}>mm</Text>
-                        </View>
-                        <View style={{width: "50%", alignItems: "center", justifyContent: "center"}}>
-                            <TextInput keyboardType={"numeric"} maxLength={2} style={{height: "50%", width: "100%", backgroundColor: "white", textAlign: "center", fontSize: 17}}/>
+                        <View style={styles.containerCasutaInput}>
+                            <TextInput 
+                                keyboardType={"numeric"} 
+                                maxLength={2} 
+                                style={styles.casutaInput}
+                                value={oraStart}
+                                onChangeText={setOraStart}
+                            />
                         </View>
                     </View>
-                    <View style={{backgroundColor: "cyan", width: "33%", flexDirection: "row"}}>
-                        <View style={{width: "40%", backgroundColor: "cyan", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 18, fontWeight: "bold"}}>ss</Text>
+                    <View style={styles.containerLabelnput}>
+                        <View style={styles.containerLabel}>
+                            <Text style={styles.label}>mm</Text>
                         </View>
-                        <View style={{width: "50%", alignItems: "center", justifyContent: "center", alignItems: "center"}}>
-                            <TextInput keyboardType={"numeric"} maxLength={2} style={{height: "50%", width: "100%", backgroundColor: "white", textAlign: "center", fontSize: 17}}/>
+                        <View style={styles.containerCasutaInput}>
+                            <TextInput 
+                                keyboardType={"numeric"} 
+                                maxLength={2} 
+                                style={styles.casutaInput}
+                                value={minutStart}
+                                onChangeText={setMinutStart}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.containerLabelnput}>
+                        <View style={styles.containerLabel}>
+                            <Text style={styles.label}>ss</Text>
+                        </View>
+                        <View style={styles.containerCasutaInput}>
+                            <TextInput 
+                                keyboardType={"numeric"} 
+                                maxLength={2} 
+                                style={styles.casutaInput}
+                                value={secundaStart}
+                                onChangeText={setSecundaStart}
+                            />
                         </View>
                     </View>
                 </View>
             </View>
 
 
-            <View style={{backgroundColor: "cyan", width: "100%", height: "50%", flexDirection: "row"}}>
-                <View style={{width: "30%", backgroundColor: "cyan", justifyContent: "center"}}>
+            <View style={styles.containerRowInput}>
+                <View style={styles.containerLeftInputTimp}>
                     <Text style={styles.text2}>End time</Text>
                 </View>
-                <View style={{width: "67%", backgroundColor: "cyan", justifyContent: "center", flexDirection: "row"}}>
-                    <View style={{backgroundColor: "cyan", width: "33%", flexDirection: "row"}}>
-                        <View style={{width: "40%", backgroundColor: "cyan", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 18, fontWeight: "bold"}}>hh</Text>
+                <View style={styles.containerRightInputTimp}>
+                    <View style={styles.containerLabelnput}>
+                        <View style={styles.containerLabel}>
+                            <Text style={styles.label}>hh</Text>
                         </View>
-                        <View style={{width: "50%", alignItems: "center", justifyContent: "center"}}>
-                            <TextInput keyboardType={"numeric"} maxLength={2} style={{height: "50%", width: "100%", backgroundColor: "white", textAlign: "center", fontSize: 17}}/>
-                        </View>
-                    </View>
-                    <View style={{backgroundColor: "cyan", width: "33%", flexDirection: "row"}}>
-                        <View style={{width: "40%", backgroundColor: "cyan", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 18, fontWeight: "bold"}}>mm</Text>
-                        </View>
-                        <View style={{width: "50%", alignItems: "center", justifyContent: "center"}}>
-                            <TextInput keyboardType={"numeric"} maxLength={2} style={{height: "50%", width: "100%", backgroundColor: "white", textAlign: "center", fontSize: 17}}/>
+                        <View style={styles.containerCasutaInput}>
+                            <TextInput 
+                            keyboardType={"numeric"} 
+                            maxLength={2} 
+                            style={styles.casutaInput}
+                            value={oraEnd}
+                            onChangeText={setOraEnd}
+                        />
                         </View>
                     </View>
-                    <View style={{backgroundColor: "cyan", width: "33%", flexDirection: "row"}}>
-                        <View style={{width: "40%", backgroundColor: "cyan", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 18, fontWeight: "bold"}}>ss</Text>
+                    <View style={styles.containerLabelnput}>
+                        <View style={styles.containerLabel}>
+                            <Text style={styles.label}>mm</Text>
                         </View>
-                        <View style={{width: "50%", alignItems: "center", justifyContent: "center", alignItems: "center"}}>
-                            <TextInput keyboardType={"numeric"} maxLength={2} style={{height: "50%", width: "100%", backgroundColor: "white", textAlign: "center", fontSize: 17}}/>
+                        <View style={styles.containerCasutaInput}>
+                            <TextInput 
+                                keyboardType={"numeric"} 
+                                maxLength={2} 
+                                style={styles.casutaInput}
+                                value={minutEnd}
+                                onChangeText={setMinutEnd}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.containerLabelnput}>
+                        <View style={styles.containerLabel}>
+                            <Text style={styles.label}>ss</Text>
+                        </View>
+                        <View style={styles.containerCasutaInput}>
+                            <TextInput 
+                                keyboardType={"numeric"} 
+                                maxLength={2} 
+                                style={styles.casutaInput}
+                                value={secundaEnd}
+                                onChangeText={setSecundaEnd}
+                            />
                         </View>
                     </View>
                 </View>
