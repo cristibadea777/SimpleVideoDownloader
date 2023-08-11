@@ -1,11 +1,10 @@
-import { View, StatusBar, Dimensions, Text, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { generareStiluri } from './Styles'
 import { useEffect, useState } from 'react'
 import { initializareFolderGalerie } from './components/Galerie'
 import { LogBox } from 'react-native'
 import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library'
-import * as ScreenOrientation from 'expo-screen-orientation'
 
 import AppBarTitlu from './components/AppBarTitlu'
 import { generareStiluriAppBarTitlu } from './components/appbar-titlu/Styles'
@@ -15,16 +14,19 @@ import ContainerDescarcare from './components/stare-descarcare/ContainerDescarca
 import { generareStiluriStareDescarcare } from './components/stare-descarcare/Styles'
 import { generareStiluriPlayerVideo } from './components/player-video/Styles'
 import ContainerVideo from './components/player-video/ContainerVideo'
+import Video from './components/player-video/Video'
+import { generareStiluriVideoFullscreen } from './components/player-video/StylesFullScreen'
 
 export default function App() {
   
-  LogBox.ignoreLogs(['new NativeEventEmitter']) //ceva warning aparut dupa importarea expo-screen-orientation
+  LogBox.ignoreLogs(['new NativeEventEmitter']) //ceva warning aparut dupa importarea expo-screen-orientation (in Video.jsx)
 
   const [styles,                setStyles]                = useState('')
   const [stylesAppBarTitlu,     setStylesAppBarTitlu]     = useState('')
   const [stylesContainerInput,  setStylesContainerInput]  = useState('')
   const [stylesStareDescarcare, setStylesStareDescarcare] = useState('')
   const [stylesPlayerVideo,     setStylesPlayerVideo]     = useState('')
+  const [stylesVideoFullScreen, setStylesVideoFullScreen] = useState('')
 
   const [culoareTitlu,          setCuloareTitlu]          = useState('#11574a')
   const [culoarePictograme,     setCuloarePictograme]     = useState('white')
@@ -37,8 +39,6 @@ export default function App() {
   const [permissionResponse,  requestPermission]    = MediaLibrary.usePermissions();
   
   const folderGalery           =   `${FileSystem.documentDirectory}galery/`
-  const windowWidthLandscape   =   Dimensions.get('window').height;
-  const windowHeightLandscape  =   Dimensions.get('window').width;
 
   const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(false)
   const [visibilityCutVideo,      setVisibilityCutVideo]      = useState(false)
@@ -61,10 +61,13 @@ export default function App() {
       setStylesContainerInput(generareStiluriContainerInput( culoareFundal, culoarePictograme ))
       setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme ) )
       setStylesPlayerVideo(generareStiluriPlayerVideo(culoareFundal, culoarePictograme, culoareTitlu) )
+      setStylesVideoFullScreen(generareStiluriVideoFullscreen())
       requestPermission()
       initializareFolderGalerie(folderGalery)
     }, []
   )
+
+  const [inFullscreen, setInFullsreen] = useState(false)
 
   useEffect(
     () => {
@@ -72,20 +75,13 @@ export default function App() {
     }, [inFullscreen]
   )
 
-  const [inFullscreen, setInFullsreen] = useState(false)
-  const changeScreenOrientationLanscape = async () => {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-  }
-  const changeScreenOrientationPortrait = async () => {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-  }
-
-
-  return (
-    <KeyboardAvoidingView behavior={"height"} enabled style={{ flex: 1 }}>
+  
+  return ( <>
+  {! inFullscreen ? (
+      <KeyboardAvoidingView behavior={"height"} enabled style={{ flex: 1 }}>
       <ScrollView style={styles.containerPrincipal} contentContainerStyle={{ flexGrow: 1 }}>
         <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>
-          {! inFullscreen && (
+          
           <>
             <AppBarTitlu
               styles                      = {stylesAppBarTitlu}
@@ -118,41 +114,24 @@ export default function App() {
               fileName                    = {fileName}
               culoarePictograme           = {culoarePictograme}
               visibilityCutVideo          = {visibilityCutVideo}
+              fileURI                     = {fileURI}
+              inFullscreen                = {inFullscreen}
+              setInFullsreen              = {setInFullsreen}
             />
           </>
-          )}
+           
       </ScrollView>
   </KeyboardAvoidingView>
-  );
+    
+    ) : (
+      <Video 
+        styles              =   {stylesVideoFullScreen}
+        visibilityCutVideo  =   {visibilityCutVideo}
+        fileURI             =   {fileURI}
+        inFullscreen        =   {inFullscreen}
+        setInFullsreen      =   {setInFullsreen}
+      />
+    )
+    }
+</>)
 }
-
-/*
-        {
-        visibilityVideoDownload ? (
-          <VideoDownload
-            changeScreenOrientationLanscape = {changeScreenOrientationLanscape}
-            changeScreenOrientationPortrait = {changeScreenOrientationPortrait}
-            windowHeightLandscape           = {windowHeightLandscape}
-            windowWidthLandscape            = {windowWidthLandscape}
-            visibilityVideoDownload         = {visibilityVideoDownload}
-            styles                          = {styles}
-            visibilityCutVideo              = {visibilityCutVideo}
-            inFullscreen                    = {inFullscreen}
-            link                            = {link}
-            handleChangeInputLink           = {handleChangeInputLink}
-            handlePressButonPaste           = {handlePressButonPaste}
-            handlePressButonDescarca        = {handlePressButonDescarca}
-            stareDescarcare                 = {stareDescarcare}
-            fileName                        = {fileName}
-            fileURI                         = {fileURI}
-            setFileName                     = {setFileName}
-            setFileURI                      = {setFileURI}
-            folderGalery                    = {folderGalery}
-            setStareDescarcare              = {setStareDescarcare}
-            setInFullsreen                  = {setInFullsreen}
-          /> )  
-        : (
-          <></>
-        )
-        }
-*/

@@ -1,8 +1,8 @@
 import { View } from "react-native"
-import Player from "./Player"
+import Video from "./Video"
 import TitluVideo from "./TitluVideo"
 
-const PlayerVideo = ( {styles, fileName, visibilityCutVideo} ) => {
+const PlayerVideo = ( {styles, fileName, visibilityCutVideo, fileURI, inFullscreen, setInFullsreen} ) => {
     return (
         <View style={[styles.containerInput, {flexGrow: 1, borderColor: "red", borderWidth: 10}]}>
             <TitluVideo 
@@ -10,9 +10,12 @@ const PlayerVideo = ( {styles, fileName, visibilityCutVideo} ) => {
                 fileName    =   {fileName}
             />
 
-            <Player 
+            <Video 
                 styles              =   {styles}
                 visibilityCutVideo  =   {visibilityCutVideo}
+                fileURI             =   {fileURI}
+                inFullscreen        =   {inFullscreen}
+                setInFullsreen      =   {setInFullsreen}
             />
         </View>
     )
