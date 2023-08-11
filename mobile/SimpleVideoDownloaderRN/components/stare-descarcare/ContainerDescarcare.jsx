@@ -2,15 +2,20 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { TouchableOpacity } from "react-native"
 import { Text, View } from "react-native"
+import { salveazaVideoAsync } from "../VideoDownloader"
 
-const handlePressButonDescarca = async () => {
-    setFileURI(null)
-    setFileName(null)
-    try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo}) } 
-    catch (error) { console.error('Error:', error) }
-}
+const ContainerDescarcare = ( {styles, stareDescarcare, link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo} ) => {
 
-const StareDescarcare = ( {styles, stareDescarcare} ) => {
+    const handlePressButonDescarca = async () => {
+        setFileURI(null)
+        setFileName(null)
+        try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo}) } 
+        catch (error) { 
+            console.error('Error:', error)
+            setStareDescarcare("Server Error") 
+        }
+    }
+
     return(
         <View style={styles.containerStareDescarcare}>
             <View style={styles.containerTextStareDescarcare}>
@@ -24,4 +29,4 @@ const StareDescarcare = ( {styles, stareDescarcare} ) => {
         </View>
     )
 }
-export default StareDescarcare
+export default ContainerDescarcare

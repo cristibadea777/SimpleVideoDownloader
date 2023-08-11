@@ -7,21 +7,18 @@ import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library'
 import * as ScreenOrientation from 'expo-screen-orientation'
 
-import VideoDownload from './components/VideoDownload'
-import AppBar from './components/AppBarTitlu'
-import { salveazaVideoAsync } from './components/VideoDownloader'
 import AppBarTitlu from './components/AppBarTitlu'
 import { generareStiluriAppBarTitlu } from './components/appbar-titlu/Styles'
 import ContainerInput from './components/input/ContainerInput'
 import { generareStiluriContainerInput } from './components/input/Styles'
-import StareDescarcare from './components/stare-descarcare/StareDescarcare'
+import ContainerDescarcare from './components/stare-descarcare/ContainerDescarcare'
 import { generareStiluriStareDescarcare } from './components/stare-descarcare/Styles'
 import { generareStiluriPlayerVideo } from './components/player-video/Styles'
 import ContainerVideo from './components/player-video/ContainerVideo'
 
 export default function App() {
   
-  LogBox.ignoreLogs(['new NativeEventEmitter'])
+  LogBox.ignoreLogs(['new NativeEventEmitter']) //ceva warning aparut dupa importarea expo-screen-orientation
 
   const [styles,                setStyles]                = useState('')
   const [stylesAppBarTitlu,     setStylesAppBarTitlu]     = useState('')
@@ -43,7 +40,7 @@ export default function App() {
   const windowWidthLandscape   =   Dimensions.get('window').height;
   const windowHeightLandscape  =   Dimensions.get('window').width;
 
-  const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(true)
+  const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(false)
   const [visibilityCutVideo,      setVisibilityCutVideo]      = useState(false)
 
 //************************************************************//
@@ -101,19 +98,26 @@ export default function App() {
               styles                      = {stylesContainerInput}   
               link                        = {link}
               setLink                     = {setLink}
-              visibilityVideoDownload     = {visibilityVideoDownload}       
+              visibilityCutVideo          = {visibilityCutVideo}       
             />
 
-            <StareDescarcare
+            <ContainerDescarcare
               styles                      = {stylesStareDescarcare}
               stareDescarcare             = {stareDescarcare}
+              link                        = {link}
+              folderGalery                = {folderGalery}
+              setFileName                 = {setFileName}
+              setFileURI                  = {setFileURI}
+              setStareDescarcare          = {setStareDescarcare}
+              visibilityCutVideo          = {visibilityCutVideo}
+
             />
 
             <ContainerVideo 
               styles                      = {stylesPlayerVideo}
               fileName                    = {fileName}
               culoarePictograme           = {culoarePictograme}
-              visibilityVideoDownload     = {visibilityVideoDownload}
+              visibilityCutVideo          = {visibilityCutVideo}
             />
           </>
           )}

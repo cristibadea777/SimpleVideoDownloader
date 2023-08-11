@@ -18,7 +18,6 @@ const generareStiluriPlayerVideo = ( culoareFundal, culoarePictograme, culoareTi
     },
     
     containerVideo: {
-      height: "40%",
       borderColor: "white",
       borderWidth: 5,
       width: "100%", 

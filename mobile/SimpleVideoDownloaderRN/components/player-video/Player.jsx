@@ -1,8 +1,8 @@
 import { Text, View } from "react-native"
 
-const Player = ( {styles} ) => {
+const Player = ( {styles, visibilityCutVideo} ) => {
     return(
-        <View style={styles.containerVideo}>
+        <View style={[styles.containerVideo, {height: visibilityCutVideo ? "43%" : "57%"}]}>
         </View>
     )
 }

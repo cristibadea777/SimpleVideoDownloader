@@ -17,7 +17,7 @@ const generareStiluriStareDescarcare = ( culoarePictograme ) => {
     },
 
     containerButonDescarca: {
-        width: "50%", 
+        width: "33%", 
         height: "100%",
         justifyContent: "flex-start",
         alignItems: "flex-end",
@@ -34,7 +34,7 @@ const generareStiluriStareDescarcare = ( culoarePictograme ) => {
     },
 
     containerTextStareDescarcare: {
-        width: "50%", 
+        width: "67%", 
         height: "100%",
         justifyContent: "center",
         alignItems: "flex-start",
