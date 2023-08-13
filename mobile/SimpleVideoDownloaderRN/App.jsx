@@ -73,7 +73,6 @@ export default function App() {
     }, []
   )
 
-  
   return ( 
     <>
       { ! inFullscreen ? (
