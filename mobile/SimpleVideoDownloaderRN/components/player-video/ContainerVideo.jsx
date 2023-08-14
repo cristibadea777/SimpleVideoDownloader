@@ -4,7 +4,7 @@ import TitluVideo from "./TitluVideo"
 
 const PlayerVideo = ( {styles, fileName, visibilityCutVideo, fileURI, inFullscreen, setInFullsreen} ) => {
     return (
-        <View style={[styles.containerInput, {flexGrow: 1, borderColor: "red", borderWidth: 10}]}>
+        <View style={[styles.containerVideo, {height: "45%", borderColor: "yellow", borderWidth:10}]}>
             <TitluVideo 
                 styles      =   {styles}
                 fileName    =   {fileName}

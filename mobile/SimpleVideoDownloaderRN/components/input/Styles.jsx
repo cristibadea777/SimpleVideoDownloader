@@ -7,8 +7,6 @@ const generareStiluriContainerInput = ( culoareFundal, culoarePictograme ) => {
     containerInput: {
         width: "100%", 
         backgroundColor: "white",
-        borderColor: "blue", 
-        borderWidth: 10,
         justifyContent: "center",
     },
 
@@ -17,8 +15,6 @@ const generareStiluriContainerInput = ( culoareFundal, culoarePictograme ) => {
         flexDirection: "row", 
         alignItems: "center",
         backgroundColor: "cyan",
-        borderColor: "yellow", 
-        borderWidth: 5
     },
 
     containerButonPaste: {
@@ -74,8 +70,6 @@ const generareStiluriContainerInput = ( culoareFundal, culoarePictograme ) => {
       backgroundColor: "white", 
       width: "100%", 
       height: "70%", 
-      borderColor: "black", 
-      borderWidth: 5
     },
 
     containerRowInput: {

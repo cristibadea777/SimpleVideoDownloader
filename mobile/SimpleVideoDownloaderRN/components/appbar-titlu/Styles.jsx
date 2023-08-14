@@ -7,8 +7,6 @@ const generareStiluriAppBarTitlu = ( culoareTitlu, culoarePictograme ) => {
         containerAppBarSiTitlu: {
             flexDirection: "column",
             height: "15%",
-            borderColor: "red",
-            borderWidth: 10
         },
 
         containerAppBar: {

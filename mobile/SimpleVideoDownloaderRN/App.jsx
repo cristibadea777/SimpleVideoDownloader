@@ -1,4 +1,4 @@
-import { StatusBar, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { StatusBar, ScrollView, KeyboardAvoidingView, View } from 'react-native'
 import { useEffect, useState } from 'react'
 import { initializareFolderGalerie } from './components/Galerie'
 import { LogBox } from 'react-native'
@@ -44,10 +44,10 @@ export default function App() {
   const [inFullscreen,            setInFullsreen]             = useState(false)
 
   const [oraStart,      setOraStart]        = useState('00')
-  const [minutStart,    setMinutStart]      = useStare('00')
+  const [minutStart,    setMinutStart]      = useState('00')
   const [secundaStart,  setSecundaStart]    = useState('00')
   const [oraEnd,        setOraEnd]          = useState('00')
-  const [minutEnd,      setMinutEnd]        = useStare('00')
+  const [minutEnd,      setMinutEnd]        = useState('00')
   const [secundaEnd,    setSecundaEnd]      = useState('00')
 
 //************************************************************//
@@ -65,7 +65,7 @@ export default function App() {
     () => {
       setStylesAppBarTitlu(generareStiluriAppBarTitlu( culoareTitlu, culoarePictograme ))
       setStylesContainerInput(generareStiluriContainerInput( culoareFundal, culoarePictograme ))
-      setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme ) )
+      setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme, culoareFundal ) )
       setStylesPlayerVideo(generareStiluriPlayerVideo(culoareFundal, culoarePictograme, culoareTitlu) )
       setStylesVideoFullScreen(generareStiluriVideoFullscreen())
       requestPermission()

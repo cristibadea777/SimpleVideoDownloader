@@ -12,24 +12,20 @@ const generareStiluriPlayerVideo = ( culoareFundal, culoarePictograme, culoareTi
         paddingLeft: 3,
         flexWrap: "wrap",
         overflow:"hidden",
-        backgroundColor: "white",
-        borderBlockColor: "yellow", 
-        borderWidth: 5
+        backgroundColor: culoareFundal
     },
     
     containerVideo: {
-      borderColor: "white",
-      borderWidth: 5,
       width: "100%", 
-      justifyContent: "center",
+      justifyContent: "flex-start",
       alignItems: "center",
-      backgroundColor: culoareFundal
+      backgroundColor: culoareFundal,
     },
 
     textTitluPlayerVideo: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: culoareTitlu
+      color: culoareTitlu,
     },
 
   })

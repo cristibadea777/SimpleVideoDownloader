@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const generareStiluriStareDescarcare = ( culoarePictograme ) => {
+const generareStiluriStareDescarcare = ( culoarePictograme, culoareFundal ) => {
 
   return StyleSheet.create({
 
@@ -12,8 +12,6 @@ const generareStiluriStareDescarcare = ( culoarePictograme ) => {
         height: "10%",
         width: "100%", 
         flexDirection: "row",
-        borderColor: "black",
-        borderWidth: 10
     },
 
     containerButonDescarca: {
@@ -22,7 +20,7 @@ const generareStiluriStareDescarcare = ( culoarePictograme ) => {
         justifyContent: "flex-start",
         alignItems: "flex-end",
         padding: 12,
-        backgroundColor: "red"
+        backgroundColor: culoareFundal
     },
 
     butonDescarca: {
@@ -39,7 +37,7 @@ const generareStiluriStareDescarcare = ( culoarePictograme ) => {
         justifyContent: "center",
         alignItems: "flex-start",
         paddingLeft: 3,
-        backgroundColor: "yellow"
+        backgroundColor: culoareFundal
     },
 
     text: {
