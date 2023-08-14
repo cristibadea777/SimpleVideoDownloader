@@ -2,10 +2,7 @@ from flask import Flask, render_template, make_response, request
 import yt_dlp
 from flask_cors import CORS
 
-import ffmpeg
 import io
-import moviepy
-
 import subprocess
 
 app = Flask(__name__, static_folder='static')
@@ -93,7 +90,7 @@ def download_cut():
                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
                     )
                 )    
-                            
+
                 trimmed_video_data, ffmpeg_stderr = ffmpeg_process.communicate(input=input_stream.read())
                 
                 headers = {
