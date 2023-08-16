@@ -4,16 +4,22 @@ import { TouchableOpacity } from "react-native"
 import { Text, View } from "react-native"
 import { salveazaVideoAsync } from "../VideoDownloader"
 
-const ContainerDescarcare = ( {styles, stareDescarcare, link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo} ) => {
+const ContainerDescarcare = ( {styles, stareDescarcare, link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo, oraStart, oraEnd, minutStart, minutEnd, secundaStart, secundaEnd} ) => {
 
     const handlePressButonDescarca = async () => {
         setFileURI(null)
         setFileName(null)
-        try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo}) } 
+        let secundeStart = calculeazaSecunde(parseInt(oraStart, 10) || 0, parseInt(minutStart, 10) || 0, parseInt(secundaStart, 10) || 0)
+        let secundeEnd = calculeazaSecunde(parseInt(oraEnd, 10) || 0, parseInt(minutEnd, 10) || 0, parseInt(secundaEnd, 10) || 0)
+        try { await salveazaVideoAsync( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd}) } 
         catch (error) { 
             console.error('Error:', error)
             setStareDescarcare("Server Error") 
         }
+    }
+
+    const calculeazaSecunde = (ore, minute, secunde) => {
+        return ((ore * 3600) + (minute*60) + secunde)
     }
 
     return(

@@ -73,6 +73,7 @@ export default function App() {
     }, []
   )
 
+
   return ( 
     <>
       { ! inFullscreen ? (
@@ -112,6 +113,12 @@ export default function App() {
                 setFileURI                  = {setFileURI}
                 setStareDescarcare          = {setStareDescarcare}
                 visibilityCutVideo          = {visibilityCutVideo}
+                oraStart                    = {oraStart}
+                oraEnd                      = {oraEnd}
+                minutStart                  = {minutStart}
+                minutEnd                    = {minutEnd}
+                secundaStart                = {secundaStart}
+                secundaEnd                  = {secundaEnd}
               />
               <ContainerVideo 
                 styles                      = {stylesPlayerVideo}

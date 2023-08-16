@@ -7,14 +7,15 @@ const AppBar = ({ styles, setVisibilityVideoDownload, setVisibilityCutVideo, vis
 
     const handlePressButonTaie = () => {
         setVisibilityCutVideo(true)
-        setVisibilityVideoDownload(true)
+        setVisibilityVideoDownload(false)
     }
     const handlePressButonDescarca = () => {
-        setVisibilityVideoDownload(true)
         setVisibilityCutVideo(false)
+        setVisibilityVideoDownload(true)
     }
     const handlePressButonGalerie = () => {
-
+        
+        setVisibilityCutVideo(false)
         setVisibilityVideoDownload(false)
     }
 

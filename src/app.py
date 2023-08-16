@@ -4,7 +4,6 @@ from flask_cors import CORS
 
 import io
 import subprocess
-
 app = Flask(__name__, static_folder='static')
 
 #pornit aplicatia pe 127.0.0.1:5000 --- $ python -m flask --app .\src\app.py run  
@@ -18,89 +17,54 @@ def home():
     return render_template("index.html")
 
 
+
+#yt-dlp trebuie instalat in virtual environment
+
 @app.route("/download/", methods=['POST'])
-def download():
-    if request.method == 'POST':
-
-        url = request.form.get('link')  #ia elementul 'link' din cererea POST
-        
-        if not url:
-            return make_response("Link not provided", 400)
-        
-        ydl_opts = {'format': 'best'}
-
-        try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info_dict = ydl.extract_info(url, download=False)#informatii despre videoclip.
-                video_id = info_dict.get("id", None)
-                video_title = info_dict.get('title', None)
-                video_extension = info_dict.get('ext', None)
-                filename = video_title + " " + "[" + video_id + "]" + "." + video_extension
-                print(filename)
-                video_url = info_dict['url']
-                video_data = ydl.urlopen(video_url).read() #video_data va fi stocata in RAM nu pe hard drive
-                headers = {
-                    'Content-Type': 'video/mp4',
-                    'Filename': filename 
-                }
-                print(headers)
-                return make_response(video_data, 200, headers)
-        except Exception as e:
-            return render_template('index.html', error=True)
-
-    return render_template('index.html', error=False)
-
-@app.route("/download_cut/", methods=['POST'])
 def download_cut():
     if request.method == 'POST':
-        url = request.form.get('link')
-        ydl_opts = {
-            'format': 'best'
-        }
-
-        start = str(24.55)
-        end = str(27)
-        
+        #preluare atribute din body
+        url   = request.form.get('link')
+        start = request.form.get('start')
+        end   = request.form.get('end')
         try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info_dict = ydl.extract_info(url, download=False)
-                video_url = info_dict['url']
-                video_id = info_dict.get("id", None)
-                video_title = info_dict.get('title', None)
-                video_extension = info_dict.get('ext', None)
-                filename = video_title + " " + "[" + video_id + "]" + "." + video_extension
-                print(filename)
+            #preluare nume fisier pe care il vom manipula 
+            filename_process = subprocess.run(
+                f"yt-dlp {url} --print filename --skip-download", 
+                check=True, 
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            ) 
+            filename = filename_process.stdout.strip() #procesul va printa numele fisierului, din output il extragem
+            print("Filename: " + filename)
 
-                video_data = ydl.urlopen(video_url).read()
-                input_stream = io.BytesIO(video_data)
+            #descarcare / descarcare si taiere clip pe server (in disk)
+            if start and end:
+                command = f"yt-dlp {url} --download-sections *{start}-{end} --force-keyframes-at-cuts"
+            else:
+                command = f"yt-dlp {url}"
+            subprocess.run(command, check=True) #check=True - pt a termina comanda si a ridica exceptie daca exista
 
-                ffmpeg_process = (
-                    subprocess.Popen(
-                        [
-                            'ffmpeg',
-                            '-i', 'pipe:0',    
-                            '-ss', start,       
-                            '-to', end,       
-                            '-c:v', 'libx264',
-                            '-c:a', 'aac',
-                            '-f', 'mp4',
-                            '-movflags', 'frag_keyframe+empty_moov',
-                            'pipe:1'      
-                        ],
-                        stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-                    )
-                )    
+            #citire clip descarcat, stocare in video_data (in RAM) 
+            with open(filename, 'rb') as video_file:
+                video_data = video_file.read()
 
-                trimmed_video_data, ffmpeg_stderr = ffmpeg_process.communicate(input=input_stream.read())
-                
-                headers = {
-                    'Content-Type': 'video/mp4',
-                    'Filename': filename 
-                }
-
-                return make_response(trimmed_video_data, 200, headers)
+            #stergere clip de pe disk
+            subprocess.run(f"rm '{filename}'", check=True)
+                  
+            headers = {
+                'Content-Type': 'video/mp4',
+                'Filename': filename 
+            }
+    
+            #returneaza clipul descarcat
+            return make_response(video_data, 200, headers)
+        
         except Exception as e:
+            print(str(e))
             return make_response(str(e), 500)
+    
     return make_response("Invalid request", 400)
 
 

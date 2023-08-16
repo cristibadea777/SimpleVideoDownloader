@@ -1,5 +1,14 @@
 import { Text, TextInput, View } from "react-native"
 
+const handleChangeValue = (value, set) => { 
+    if(value >= 60)
+        set('59')
+    else if(value < 0)
+        set('00')
+    else 
+        set(value)
+}
+
 const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minutEnd, secundaEnd, setOraStart, 
                         setMinutStart, setSecundaStart, setOraEnd, setMinutEnd, setSecundaEnd} ) => {
     return (
@@ -20,7 +29,7 @@ const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minu
                                 maxLength={2} 
                                 style={styles.casutaInput}
                                 value={oraStart}
-                                onChangeText={setOraStart}
+                                onChangeText={(value) => {handleChangeValue(value, setOraStart)}}
                             />
                         </View>
                     </View>
@@ -34,7 +43,7 @@ const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minu
                                 maxLength={2} 
                                 style={styles.casutaInput}
                                 value={minutStart}
-                                onChangeText={setMinutStart}
+                                onChangeText={(value) => {handleChangeValue(value, setMinutStart)}}
                             />
                         </View>
                     </View>
@@ -48,7 +57,7 @@ const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minu
                                 maxLength={2} 
                                 style={styles.casutaInput}
                                 value={secundaStart}
-                                onChangeText={setSecundaStart}
+                                onChangeText={(value) => {handleChangeValue(value, setSecundaStart)}}
                             />
                         </View>
                     </View>
@@ -71,7 +80,7 @@ const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minu
                             maxLength={2} 
                             style={styles.casutaInput}
                             value={oraEnd}
-                            onChangeText={setOraEnd}
+                            onChangeText={(value) => {handleChangeValue(value, setOraEnd)}}
                         />
                         </View>
                     </View>
@@ -85,7 +94,7 @@ const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minu
                                 maxLength={2} 
                                 style={styles.casutaInput}
                                 value={minutEnd}
-                                onChangeText={setMinutEnd}
+                                onChangeText={(value) => {handleChangeValue(value, setMinutEnd)}}
                             />
                         </View>
                     </View>
@@ -99,7 +108,7 @@ const InputDurata = ( { styles, oraStart, minutStart, secundaStart, oraEnd, minu
                                 maxLength={2} 
                                 style={styles.casutaInput}
                                 value={secundaEnd}
-                                onChangeText={setSecundaEnd}
+                                onChangeText={(value) => {handleChangeValue(value, setSecundaEnd)}}
                             />
                         </View>
                     </View>

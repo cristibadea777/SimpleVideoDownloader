@@ -1,32 +1,42 @@
 import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing'
 
-const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo} ) => {
+const api = 'https://9226-86-120-171-139.ngrok-free.app/'
+
+const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo,secundeStart, secundeEnd} ) => {
     setStareDescarcare("Downloading...")
+    //endpoint-ul pt download
+    let apiEndpoint = api + '/download/'
     //data formularului ce se trimite in cererea catre API
     //link se primiste ca props de la aplicatie 
     const formData = new FormData()
     formData.append('link', link) 
+    //daca visibilityCutVideo este false atunci se descarca tot clipul (serverul se uita daca exista sau nu in body start, end), 
+    //altfel se descarca doar sectiunea indicata 
+    if(visibilityCutVideo){
+        formData.append('start', secundeStart)
+        formData.append('end', secundeEnd)
+    }
     //cererea asincrona se face cu axios
     //preluare raspuns de la API - se returneaza un video sub forma de blob 
-    //daca visibilityCutVideo este false atunci se descarca tot clipul apelandu-se /download, 
-    //altfel se descarca doar sectiunea indicata apeland /download-section
-    let apiEndpoint
-    if(!visibilityCutVideo)
-        apiEndpoint = 'https://simple-video-downloader.onrender.com/download/'
-    else
-        apiEndpoint = 'https://simple-video-downloader.onrender.com/download-section/'
-    const videoResponse = await axios.post(apiEndpoint, formData, {
-    headers: {
-        'Content-Type': 'multipart/form-data',
-    },
-    responseType: 'blob',
-    })
+    const videoResponse = await axios.post(
+        apiEndpoint, 
+        formData, 
+        {
+            headers: { 
+                'Content-Type': 'multipart/form-data', 
+            },
+            responseType: 'blob',
+        }
+    )
     return videoResponse
 }
 
-const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo} ) => {    
-    const videoResponse = await descarcaVideoAsync({link, setStareDescarcare, visibilityCutVideo})
+const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd} ) => {    
+    console.log(secundeStart)
+    console.log(secundeEnd)
+    const videoResponse = await descarcaVideoAsync({link, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd})
     const newFileName = videoResponse.headers.get('Filename')
     const newFileURI  = `${folderGalery}${newFileName}`//API-ul trimite si extensia, ca parte ca numelui fisierului
     //citire a raspunsului video si salvare cu writeAsStringAsync
@@ -41,5 +51,6 @@ const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI,
     setFileName(newFileName)
     setFileURI(newFileURI)      
     setStareDescarcare("Finished.")
+    Sharing.shareAsync(newFileURI)
 }
 export {descarcaVideoAsync, salveazaVideoAsync}
