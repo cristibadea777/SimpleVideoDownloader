@@ -3,18 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { useState } from "react"
 import { TouchableOpacity, View } from "react-native"
 
-const AppBar = ({ styles, setVisibilityVideoDownload, setVisibilityCutVideo, visibilityCutVideo }) => {
+const AppBar = ({ styles, setVisibilityVideoDownload, setVisibilityCutVideo, setVisibilityVideoGalery }) => {
 
     const handlePressButonTaie = () => {
         setVisibilityCutVideo(true)
         setVisibilityVideoDownload(false)
+        setVisibilityVideoGalery(false)
     }
     const handlePressButonDescarca = () => {
-        setVisibilityCutVideo(false)
         setVisibilityVideoDownload(true)
+        setVisibilityCutVideo(false)
+        setVisibilityVideoGalery(false)
     }
     const handlePressButonGalerie = () => {
-        
+        setVisibilityVideoGalery(true)
         setVisibilityCutVideo(false)
         setVisibilityVideoDownload(false)
     }

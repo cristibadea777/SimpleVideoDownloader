@@ -14,7 +14,7 @@ const ContainerInput = ( {styles, link, setLink, visibilityCutVideo, oraStart, m
             {
             visibilityCutVideo && (
             <InputDurata 
-                styles                      =   {styles}
+                styles                      = {styles}
                 oraStart                    = {oraStart}
                 oraEnd                      = {oraEnd}
                 setOraStart                 = {setOraStart}

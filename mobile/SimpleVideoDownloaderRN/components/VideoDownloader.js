@@ -48,7 +48,7 @@ const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI,
       //dupa ce datele din raspuns au fost citite, se salveaza fisierul
       await FileSystem.writeAsStringAsync(newFileURI, file_reader.result.split(',')[1], { encoding: FileSystem.EncodingType.Base64 })
     }
-    setFileName(newFileName)
+    setFileName(newFileName.split(' [')[0])
     setFileURI(newFileURI)      
     setStareDescarcare("Finished.")
     Sharing.shareAsync(newFileURI)

@@ -27,6 +27,8 @@ def download_cut():
         url   = request.form.get('link')
         start = request.form.get('start')
         end   = request.form.get('end')
+        print("End: " + str(end))
+        print("Start: " + str(start))
         try:
             #preluare nume fisier pe care il vom manipula 
             filename_process = subprocess.run(

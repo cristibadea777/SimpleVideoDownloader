@@ -22,7 +22,7 @@ const Video = ( {styles, visibilityCutVideo, fileURI, inFullscreen, setInFullsre
             {
                 fileURI && (
                     <VideoPlayer
-                        style={{height: inFullscreen ? (windowHeightLandscape-33) : 287, width: inFullscreen ? (windowWidthLandscape) : 433, flex: inFullscreen ? 1 : 0}}
+                        style={{height: inFullscreen ? (windowHeightLandscape-33) : 433, width: inFullscreen ? (windowWidthLandscape) : 287, flex: inFullscreen ? 1 : 0}}
                         videoProps={{
                         shouldPlay: false,
                         resizeMode: ResizeMode.COVER,

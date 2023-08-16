@@ -1,11 +1,11 @@
 import { StatusBar, ScrollView, KeyboardAvoidingView, View } from 'react-native'
 import { useEffect, useState } from 'react'
-import { initializareFolderGalerie } from './components/Galerie'
+import { initializareFolderGalerie, populareListaClipuriGalerie } from './components/Galerie'
 import { LogBox } from 'react-native'
 import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library'
 
-import AppBarTitlu from './components/AppBarTitlu'
+import AppBarTitlu from './components/appbar-titlu/AppBarTitlu'
 import { generareStiluriAppBarTitlu } from './components/appbar-titlu/Styles'
 import ContainerInput from './components/input/ContainerInput'
 import { generareStiluriContainerInput } from './components/input/Styles'
@@ -15,6 +15,7 @@ import { generareStiluriPlayerVideo } from './components/player-video/Styles'
 import ContainerVideo from './components/player-video/ContainerVideo'
 import Video from './components/player-video/Video'
 import { generareStiluriVideoFullscreen } from './components/player-video/StylesFullScreen'
+import ContainerGalerie from './components/galerie/ContainerGalerie'
 
 export default function App() {
   
@@ -39,8 +40,10 @@ export default function App() {
   
   const folderGalery           =   `${FileSystem.documentDirectory}galery/`
 
-  const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(false)
+  const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(true)
   const [visibilityCutVideo,      setVisibilityCutVideo]      = useState(false)
+  const [visibilityVideoGalery,   setVisibilityVideoGalery]  = useState(false)
+
   const [inFullscreen,            setInFullsreen]             = useState(false)
 
   const [oraStart,      setOraStart]        = useState('00')
@@ -50,11 +53,13 @@ export default function App() {
   const [minutEnd,      setMinutEnd]        = useState('00')
   const [secundaEnd,    setSecundaEnd]      = useState('00')
 
+
+  const [listaClipuri, setListaClipuru] = useState([])
+
 //************************************************************//
 //************************************************************//
 //************************************************************//
 //TO DO 
-  //Functionalitate CUT - pe alt endpoint din API
   //Functioanalitate vizualizare galerie descarcata 
   //Functioalitate share clipuri din galerie, edit nume fisier, delete
 //************************************************************//
@@ -70,6 +75,7 @@ export default function App() {
       setStylesVideoFullScreen(generareStiluriVideoFullscreen())
       requestPermission()
       initializareFolderGalerie(folderGalery)
+      populareListaClipuriGalerie(folderGalery, listaClipuri)
     }, []
   )
 
@@ -78,14 +84,19 @@ export default function App() {
     <>
       { ! inFullscreen ? (
           <KeyboardAvoidingView behavior={"height"} enabled style={{ flex: 1 }}>
-            <ScrollView style={styles.containerPrincipal} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView style={styles.containerPrincipal} contentContainerStyle={{ height: "100%", backgroundColor: culoareFundal }}>
               <StatusBar style="auto" backgroundColor={"black"} barStyle={"light-content"}> </StatusBar>              
               <AppBarTitlu
                 styles                      = {stylesAppBarTitlu}
                 setVisibilityVideoDownload  = {setVisibilityVideoDownload}
                 setVisibilityCutVideo       = {setVisibilityCutVideo}
+                setVisibilityVideoGalery    = {setVisibilityVideoGalery}
                 visibilityCutVideo          = {visibilityCutVideo}
+                visibilityVideoDownload     = {visibilityVideoDownload}
+                visibilityVideoGalery       = {visibilityVideoGalery}
               />
+              { ! visibilityVideoGalery ? (
+              <>
               <ContainerInput
                 styles                      = {stylesContainerInput}   
                 link                        = {link}
@@ -129,6 +140,15 @@ export default function App() {
                 inFullscreen                = {inFullscreen}
                 setInFullsreen              = {setInFullsreen}
               /> 
+              </>
+              ) : (
+              <ContainerGalerie 
+                  listaClipuri              = {listaClipuri}
+                  setInFullsreen            = {setInFullsreen}
+                  setFileUri                = {setFileURI}
+              />
+              )
+              }
             </ScrollView>
           </KeyboardAvoidingView>  
         ) : (
