@@ -1,24 +1,21 @@
 import { View } from "react-native"
-import Video from "./Video"
+import Videoclip from "./Videoclip"
 import TitluVideo from "./TitluVideo"
 
-const PlayerVideo = ( {styles, fileName, visibilityCutVideo, fileURI, inFullscreen, setInFullsreen} ) => {
+const ContainerVideo = ( {styles, fileName, fileURI} ) => {
     
     return (
-        <View style={[styles.containerVideo, {height: "45%"}]}>
+        <View style={{height: "40%"}}>
             <TitluVideo 
                 styles      =   {styles}
                 fileName    =   {fileName}
             />
 
-            <Video 
+            <Videoclip 
                 styles              =   {styles}
-                visibilityCutVideo  =   {visibilityCutVideo}
                 fileURI             =   {fileURI}
-                inFullscreen        =   {inFullscreen}
-                setInFullsreen      =   {setInFullsreen}
             />
         </View>
     )
 }
-export default PlayerVideo
+export default ContainerVideo

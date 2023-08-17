@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing'
 
-const api = 'https://9226-86-120-171-139.ngrok-free.app/'
+const api = 'https://918e-5-14-148-122.ngrok-free.app/'
 
 const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo,secundeStart, secundeEnd} ) => {
     setStareDescarcare("Downloading...")

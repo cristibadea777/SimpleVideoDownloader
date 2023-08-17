@@ -15,11 +15,9 @@ const generareStiluriPlayerVideo = ( culoareFundal, culoarePictograme, culoareTi
         backgroundColor: culoareFundal
     },
     
-    containerVideo: {
-      width: "100%", 
-      justifyContent: "flex-start",
-      alignItems: "center",
-      backgroundColor: culoareFundal,
+    video: {
+      flex: 1,
+      alignSelf: 'stretch'
     },
 
     textTitluPlayerVideo: {
