@@ -14,6 +14,7 @@ import { generareStiluriStareDescarcare } from './components/stare-descarcare/St
 import { generareStiluriPlayerVideo } from './components/player-video/Styles'
 import ContainerVideo from './components/player-video/ContainerVideo'
 import ContainerGalerie from './components/galerie/ContainerGalerie'
+import generateStiluriGalerie from './components/galerie/Styles'
 
 export default function App() {
   
@@ -24,7 +25,7 @@ export default function App() {
   const [stylesContainerInput,  setStylesContainerInput]  = useState('')
   const [stylesStareDescarcare, setStylesStareDescarcare] = useState('')
   const [stylesPlayerVideo,     setStylesPlayerVideo]     = useState('')
-  const [stylesVideoFullScreen, setStylesVideoFullScreen] = useState('')
+  const [stylesGalerie,         setStylesGalerie]         = useState('')
 
   const [culoareTitlu,          setCuloareTitlu]          = useState('#11574a')
   const [culoarePictograme,     setCuloarePictograme]     = useState('white')
@@ -40,7 +41,7 @@ export default function App() {
 
   const [visibilityVideoDownload, setVisibilityVideoDownload] = useState(true)
   const [visibilityCutVideo,      setVisibilityCutVideo]      = useState(false)
-  const [visibilityVideoGalery,   setVisibilityVideoGalery]  = useState(false)
+  const [visibilityVideoGalery,   setVisibilityVideoGalery]   = useState(false)
 
 
   const [oraStart,      setOraStart]        = useState('00')
@@ -57,7 +58,6 @@ export default function App() {
 //************************************************************//
 //************************************************************//
 //TO DO 
-  //Functioanalitate vizualizare galerie descarcata 
   //Functioalitate share clipuri din galerie, edit nume fisier, delete
 //************************************************************//
 //************************************************************//
@@ -67,8 +67,9 @@ export default function App() {
     () => {
       setStylesAppBarTitlu(generareStiluriAppBarTitlu( culoareTitlu, culoarePictograme ))
       setStylesContainerInput(generareStiluriContainerInput( culoareFundal, culoarePictograme ))
-      setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme, culoareFundal ) )
-      setStylesPlayerVideo(generareStiluriPlayerVideo(culoareFundal, culoarePictograme, culoareTitlu) )
+      setStylesStareDescarcare(generareStiluriStareDescarcare( culoarePictograme, culoareFundal ))
+      setStylesPlayerVideo(generareStiluriPlayerVideo( culoareFundal, culoarePictograme, culoareTitlu ))
+      setStylesGalerie(generateStiluriGalerie( culoarePictograme, culoareFundal ))
       requestPermission()
       initializareFolderGalerie(folderGalery)
       populareListaClipuriGalerie(folderGalery, listaClipuri)
@@ -130,7 +131,6 @@ export default function App() {
               <ContainerVideo 
                 styles                      = {stylesPlayerVideo}
                 fileName                    = {fileName}
-                culoarePictograme           = {culoarePictograme}
                 fileURI                     = {fileURI}
               /> 
             )
@@ -139,6 +139,7 @@ export default function App() {
         ) : (
         <ContainerGalerie 
             listaClipuri              = {listaClipuri}
+            styles                    = {stylesGalerie}
         />
         )
         }

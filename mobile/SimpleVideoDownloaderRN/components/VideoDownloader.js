@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing'
 
 const api = 'https://918e-5-14-148-122.ngrok-free.app/'
 
@@ -51,6 +50,5 @@ const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI,
     setFileName(newFileName.split(' [')[0])
     setFileURI(newFileURI)      
     setStareDescarcare("Finished.")
-    Sharing.shareAsync(newFileURI)
 }
 export {descarcaVideoAsync, salveazaVideoAsync}

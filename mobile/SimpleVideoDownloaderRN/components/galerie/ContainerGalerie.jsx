@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react"
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Video } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEdit, faShare, faShareAlt, faX } from "@fortawesome/free-solid-svg-icons";
+import * as Sharing from "expo-sharing"
 
-const ContainerGalerie = ({ listaClipuri }) => {
+const ContainerGalerie = ({ listaClipuri, styles }) => {
 
     const [videoURI, setVideoURI] = useState()
 
@@ -15,42 +18,27 @@ const ContainerGalerie = ({ listaClipuri }) => {
         }
     }
 
-    useEffect(
-        () => {
-            console.log(videoURI)
-        }, [videoURI]
-    )
-
-    const handlePressTitlu = (uri) => {
-        setVideoURI(uri)
+    const onPressButonDelete = () => {
     }
 
-    const styles = StyleSheet.create(
-        {
-            containerVideo: {
-                height: 333, 
-                width: "100%",
-            },
-            video: {
-                height: "80%",
-                alignSelf: "stretch"
-            },
-            containerButoane: {
-                flex: 1, 
-                backgroundColor: "blue",
-                marginBottom: 12
-            }
-        }
-    )
+    const onPressButonEdit = () => {
+    }
+
+    const onPressButonShare = (file) => {
+        Sharing.shareAsync(file)
+    }
 
     const afisareListaClipuri = () => {
         return listaClipuri.map((item, index) => (
             <TouchableOpacity 
                 key={index} 
-                style={{backgroundColor: "cyan", marginBottom: 3, borderColor: "white", borderBottomWidth: 3}}
-                onPress={()=>{handlePressTitlu(item.uri)}}
+                style={styles.containerGalerie}
+                onPress={()=>{setVideoURI(item.uri)}}
+                activeOpacity={0.7}
             >
-                <Text style={{fontSize: 24, color: (videoURI === item.uri) ? "blue" : "black", textAlign: "center"}}>{item.titlu.split(' [')[0]}</Text>
+                <Text style={{fontSize: 24, color: (videoURI === item.uri) ? "blue" : "black", textAlign: "center"}}>
+                    {item.titlu.split(' [')[0]}
+                </Text>
                 {
                     videoURI === item.uri ? (
                         <View style={styles.containerVideo}>
@@ -63,7 +51,29 @@ const ContainerGalerie = ({ listaClipuri }) => {
                                 onFullscreenUpdate={changeOrientation}
                             />
                             <View style={styles.containerButoane}>
-                            
+                                <TouchableOpacity
+                                    style={styles.buton}
+                                    onPress={{}}
+                                >
+                                    <FontAwesomeIcon icon={faX} size={33} style={styles.culoarePictograme} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.buton}
+                                    onPress={{}}
+                                >
+                                    <FontAwesomeIcon icon={faEdit} size={33} style={styles.culoarePictograme} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.buton}
+                                    onPress={
+                                        event => {
+                                            event.stopPropagation()
+                                            onPressButonShare(item.uri)
+                                        }
+                                    }
+                                >
+                                    <FontAwesomeIcon icon={faShareAlt} size={33} style={styles.culoarePictograme} />
+                                </TouchableOpacity>
                             </View>
                         </View>
                     ): (
