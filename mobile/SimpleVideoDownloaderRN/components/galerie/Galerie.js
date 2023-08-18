@@ -27,6 +27,23 @@ const afisareContinutFolderGalerie = async (folderGalery) => {
     )
 }
 
+const removeElementListaClipuri = (listaClipuri, index) => {
+    const newListaClipuri = [...listaClipuri]
+    newListaClipuri.splice(index, 1)
+    return newListaClipuri
+}
+
+const addElementListaClipuri = (listaClipuri, fileName, fileURI) => {
+    const newListaClipuri = [...listaClipuri]
+    newListaClipuri.push(
+        {
+            "titlu" : fileName, 
+            "uri"   : fileURI
+        }
+    )
+    return newListaClipuri 
+}
+
 const populareListaClipuriGalerie = async (folderGalery, listaClipuri) => {
     console.log(listaClipuri)
     directoryContents = await FileSystem.readDirectoryAsync(folderGalery)
@@ -35,11 +52,11 @@ const populareListaClipuriGalerie = async (folderGalery, listaClipuri) => {
             listaClipuri.push(
                 {
                     "titlu" : item, 
-                    "uri": folderGalery + "/" + item
+                    "uri"   : folderGalery + "/" + item
                 }
             ) 
         }
     )
     console.log(listaClipuri)
 }
-export {initializareFolderGalerie, afisareContinutDirector, afisareContinutFolderGalerie, populareListaClipuriGalerie}
+export {initializareFolderGalerie, afisareContinutDirector, afisareContinutFolderGalerie, populareListaClipuriGalerie, removeElementListaClipuri, addElementListaClipuri}

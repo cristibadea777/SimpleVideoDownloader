@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
+import { addElementListaClipuri } from '../galerie/Galerie';
 
 const api = 'https://918e-5-14-148-122.ngrok-free.app/'
 
@@ -32,9 +33,7 @@ const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo
     return videoResponse
 }
 
-const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd} ) => {    
-    console.log(secundeStart)
-    console.log(secundeEnd)
+const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd, listaClipuri, setListaClipuri} ) => {    
     const videoResponse = await descarcaVideoAsync({link, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd})
     const newFileName = videoResponse.headers.get('Filename')
     const newFileURI  = `${folderGalery}${newFileName}`//API-ul trimite si extensia, ca parte ca numelui fisierului
@@ -50,5 +49,6 @@ const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI,
     setFileName(newFileName.split(' [')[0])
     setFileURI(newFileURI)      
     setStareDescarcare("Finished.")
+    await setListaClipuri(addElementListaClipuri(listaClipuri, newFileName, newFileURI))
 }
 export {descarcaVideoAsync, salveazaVideoAsync}
