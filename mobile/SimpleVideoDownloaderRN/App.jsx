@@ -60,8 +60,12 @@ export default function App() {
 //************************************************************//
 //************************************************************//
 //TO DO 
-  //Functioalitate share clipuri din galerie, edit nume fisier, delete
-  //dupa ce se descarca clip, sa seupdateze lista de clipuri (push clipului)
+  //Functioalitate edit nume fisier in galerie
+  //in API restrictionat maximul de GB pt video  --extract file size inainte de dowwnload
+  //daca start time == end time atunci end time + 1
+  //in API restrictionat doar pt youtube/piped/tiktok/facebook
+  //facut iconita pt aplicatie, pus in playstore
+  //configurat server nginx 
 //************************************************************//
 //************************************************************//
 //************************************************************//
@@ -148,7 +152,9 @@ export default function App() {
             styles                      = {stylesGalerie}
             setListaClipuri             = {setListaClipuri}
             setVisibilityModalStergere  = {setVisibilityModalStergere}
-            visibilityModalStergere     = {visibilityModalStergere}      
+            visibilityModalStergere     = {visibilityModalStergere}    
+            visibilityModalEdit         = {visibilityModalEdit}
+            setVisibilityModalEdit      = {setVisibilityModalEdit}  
             stylesModale                = {stylesModale}
         />
         )

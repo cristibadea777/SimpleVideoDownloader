@@ -28,7 +28,7 @@ const ModalStergere = ( {visibilityModalStergere, setVisibilityModalStergere, st
                         <Text style={[styles.textTitluModal, {color: "red"}]}> Delete this video ? </Text>
                     </View>
                     <View style={styles.containerTitluVideoStergere}>
-                        <Text style={styles.textTitluVideoStergere}> {videoName} </Text>
+                        <Text style={styles.textTitluVideo}> {videoName} </Text>
                     </View>
                     <View style={styles.containerButoane}>
                         <TouchableOpacity 

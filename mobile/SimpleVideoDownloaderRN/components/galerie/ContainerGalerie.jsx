@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEdit, faShare, faShareAlt, faX } from "@fortawesome/free-solid-svg-icons";
 import * as Sharing from "expo-sharing"
 import ModalStergere from "../modale/ModalStergere";
+import ModalEdit from "../modale/ModalEdit";
 
-const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale, visibilityModalStergere, setVisibilityModalStergere, setVisibilityModalEdit }) => {
+const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale, visibilityModalStergere, setVisibilityModalStergere, visibilityModalEdit, setVisibilityModalEdit }) => {
 
     const [videoURI,    setVideoURI]  = useState()
-    const [videoName,   setVideoName] = useState(' Rammestein - Sonne (slowed ~ reverb) [zVonqC7-1cg].mp4 ')
+    const [videoName,   setVideoName] = useState('')
     const [file,        setFile]      = useState('')
     const [index,       setIndex]     = useState('')
 
@@ -21,14 +22,6 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
             await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT)
         }
     }
-
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
-    //de facut modale de confirmare si input nume nou
-
-
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
     const handlePressItemLista = (item) => {
         setVideoURI(item.uri)
@@ -41,12 +34,13 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
         setVisibilityModalStergere(true)
     }
 
-    const onPressButonEdit = (file) => {
-        //copy cu noul nume 
-        //apoi delete
+    const handlePressButonedit = (file, index, title) => {
+        setFile(file)
+        setIndex(index)
+        setVisibilityModalEdit(true)
     }
 
-    const onPressButonShare = (file) => {
+    const handlePressButonShare = (file) => {
         Sharing.shareAsync(file)
     }
 
@@ -86,7 +80,12 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.buton}
-                                    onPress={{}}
+                                    onPress={
+                                        event => {
+                                            event.stopPropagation()
+                                            handlePressButonedit(item.uri, index)
+                                        }
+                                    }
                                 >
                                     <FontAwesomeIcon icon={faEdit} size={33} style={styles.culoarePictograme} />
                                 </TouchableOpacity>
@@ -95,7 +94,7 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                                     onPress={
                                         event => {
                                             event.stopPropagation()
-                                            onPressButonShare(item.uri)
+                                            handlePressButonShare(item.uri)
                                         }
                                     }
                                 >
@@ -127,6 +126,20 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                 listaClipuri                  = {listaClipuri}
                 setListaClipuri               = {setListaClipuri}
             />
+
+            <ModalEdit 
+                visibilityModalEdit           = {visibilityModalEdit}
+                setVisibilityModalEdit        = {setVisibilityModalEdit}
+                styles                        = {stylesModale}
+                videoURI                      = {videoURI}
+                videoName                     = {videoName}
+                file                          = {file}
+                index                         = {index}
+                listaClipuri                  = {listaClipuri}
+                setListaClipuri               = {setListaClipuri}
+                setVideoName                  = {setVideoName}
+            />
+        
         </ScrollView>
     )
 }

@@ -31,7 +31,7 @@ const generareStiluriModale = ( culoareFundal, culoarePictograme ) => {
         color: "white",
     },
 
-    textTitluVideoStergere: {
+    textTitluVideo: {
         fontSize: 20,
         color: "black"
     },
@@ -41,6 +41,15 @@ const generareStiluriModale = ( culoareFundal, culoarePictograme ) => {
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
+    },
+
+    containerInputTitluEdit: {
+        flexDirection: "row",
+        height: "40%",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        backgroundColor: "white",
     },
 
     containerButoane: {
@@ -59,7 +68,14 @@ const generareStiluriModale = ( culoareFundal, culoarePictograme ) => {
     textButoane: {
         fontSize: 33,
         color: "white"
+    },
+
+    containerModalEdit: {
+        height: "33%",
+        width: "90%",
+        backgroundColor: "cyan",
     }
+
 
   })
 }
