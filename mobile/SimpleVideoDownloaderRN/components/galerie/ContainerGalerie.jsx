@@ -13,6 +13,7 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
     const [videoURI,    setVideoURI]  = useState()
     const [videoName,   setVideoName] = useState('')
     const [index,       setIndex]     = useState('')
+    const [extensie,    setExtensie]  = useState('')
 
     const changeOrientation = async () => {
         if (Dimensions.get('window').height > Dimensions.get('window').width) {
@@ -35,7 +36,8 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
 
     const handlePressButonEdit = (uri, title, index) => {
         setVideoURI(uri)
-        setVideoName(title)
+        setVideoName(title.split(' [')[0])
+        setExtensie(' [' + title.split(' [')[1])
         setIndex(index)
         setVisibilityModalEdit(true)
     }
@@ -136,6 +138,7 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                 listaClipuri                  = {listaClipuri}
                 setListaClipuri               = {setListaClipuri}
                 setVideoName                  = {setVideoName}
+                extensie                      = {extensie}
             />
         
         </ScrollView>

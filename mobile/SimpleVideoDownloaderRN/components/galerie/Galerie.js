@@ -33,10 +33,8 @@ const removeElementListaClipuri = (listaClipuri, index) => {
     return newListaClipuri
 }
 
-const renameFile = async (oldURI, newFileName) => {
+const renameFile = async (oldURI, newURI) => {
     try {
-        const file_info = await FileSystem.getInfoAsync(oldURI)
-        const newURI = `${file_info.uri.substring(0, file_info.uri.lastIndexOf('/') + 1)}${newFileName}`
         await FileSystem.moveAsync( 
             { 
                 from: oldURI,
