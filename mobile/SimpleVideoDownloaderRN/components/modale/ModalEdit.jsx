@@ -1,14 +1,23 @@
 import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { addElementListaClipuri, addElementListaClipuriAtIndex, removeElementListaClipuri, renameFile } from "../galerie/Galerie"
 
-const ModalEdit = ( {visibilityModalEdit, setVisibilityModalEdit, styles, videoURI, videoName, setVideoName, file, index, listaClipuri, setListaClipuri} ) => {
+const ModalEdit = ( {visibilityModalEdit, setVisibilityModalEdit, styles, videoURI, videoName, setVideoName, index, listaClipuri, setListaClipuri} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalEdit(false)
     }
 
     const handleEditVideo = async () => {
-        //facut copie video cu noul nume
-        //sters clipul vechi
+        //scoatem elementul cu numele vechi din lista
+        const newListaClipuri = await removeElementListaClipuri([...listaClipuri], index)
+        setListaClipuri(newListaClipuri)
+        //rename fisierului
+        await renameFile(videoURI, videoName)
+        //pentru lista in care am scos vechiul element, adaugam noul element, cu numele nou
+        const updatedListaClipuri = await addElementListaClipuriAtIndex(newListaClipuri, videoName, videoURI, index)
+        setListaClipuri(updatedListaClipuri)
+        //close
+        handleCloseModal()
     }
 
     return (
@@ -28,16 +37,16 @@ const ModalEdit = ( {visibilityModalEdit, setVisibilityModalEdit, styles, videoU
                             value={videoName}
                             onChangeText={setVideoName}
                             placeholder="Input the new name..."
-                            style={{height: "100%", width: "100%", fontSize: 20, color: "black", padding: 12}}
+                            style={styles.textInputEdit}
                             multiline={true}
                         />
                     </View>
                     <View style={styles.containerButoane}>
                         <TouchableOpacity 
-                            style={[styles.butoane, {backgroundColor: "white"}]}
+                            style={[styles.butoane, {backgroundColor: "red"}]}
                             onPress={handleEditVideo}
                         >
-                            <Text style={[styles.textButoane, {color: "black"}]}>CHANGE</Text>
+                            <Text style={[styles.textButoane, {color: "white"}]}>CHANGE</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity

@@ -2,7 +2,7 @@ import { Modal, Text, TouchableOpacity, View } from "react-native"
 import { removeElementListaClipuri } from "../galerie/Galerie"
 import { deleteAsync } from "expo-file-system"
 
-const ModalStergere = ( {visibilityModalStergere, setVisibilityModalStergere, styles, videoURI, videoName, file, index, listaClipuri, setListaClipuri} ) => {
+const ModalStergere = ( {visibilityModalStergere, setVisibilityModalStergere, styles, videoURI, videoName, index, listaClipuri, setListaClipuri} ) => {
 
     const handleCloseModal = () => {
         setVisibilityModalStergere(false)
@@ -11,7 +11,7 @@ const ModalStergere = ( {visibilityModalStergere, setVisibilityModalStergere, st
     const handleDeleteVideo = async () => {
         const newListaClipuri = await removeElementListaClipuri(listaClipuri, index)
         setListaClipuri(newListaClipuri)
-        await deleteAsync(file)
+        await deleteAsync(videoURI)
         handleCloseModal()
     }
 

@@ -33,6 +33,31 @@ const removeElementListaClipuri = (listaClipuri, index) => {
     return newListaClipuri
 }
 
+const renameFile = async (oldURI, newFileName) => {
+    try {
+        const file_info = await FileSystem.getInfoAsync(oldURI)
+        const newURI = `${file_info.uri.substring(0, file_info.uri.lastIndexOf('/') + 1)}${newFileName}`
+        await FileSystem.moveAsync( 
+            { 
+                from: oldURI,
+                to: newURI
+            } 
+        )
+    } catch (error) {
+        console.log("Error renaming the file: " + error)
+    }
+} 
+
+const addElementListaClipuriAtIndex = (listaClipuri, fileName, fileURI, index) => {
+    const newListaClipuri = [...listaClipuri]
+    const video = {
+        "titlu" : fileName,
+        "uri" : fileURI,
+    }
+    newListaClipuri.splice(index, 0, video)
+    return newListaClipuri
+}
+
 const addElementListaClipuri = (listaClipuri, fileName, fileURI) => {
     const newListaClipuri = [...listaClipuri]
     newListaClipuri.push(
@@ -57,6 +82,9 @@ const populareListaClipuriGalerie = async (folderGalery, listaClipuri) => {
             ) 
         }
     )
-    console.log(listaClipuri)
+    console.log(JSON.stringify(listaClipuri, null, 2))
 }
-export {initializareFolderGalerie, afisareContinutDirector, afisareContinutFolderGalerie, populareListaClipuriGalerie, removeElementListaClipuri, addElementListaClipuri}
+export {    initializareFolderGalerie, afisareContinutDirector, afisareContinutFolderGalerie, 
+            populareListaClipuriGalerie, removeElementListaClipuri, addElementListaClipuri, 
+            renameFile, addElementListaClipuriAtIndex
+        }

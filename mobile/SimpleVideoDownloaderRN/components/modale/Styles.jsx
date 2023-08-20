@@ -74,6 +74,14 @@ const generareStiluriModale = ( culoareFundal, culoarePictograme ) => {
         height: "33%",
         width: "90%",
         backgroundColor: "cyan",
+    },
+
+    textInputEdit: {
+        height: "100%",
+        width: "100%", 
+        fontSize: 20, 
+        color: "black", 
+        padding: 12
     }
 
 

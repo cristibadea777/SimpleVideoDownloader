@@ -60,15 +60,20 @@ export default function App() {
 //************************************************************//
 //************************************************************//
 //TO DO 
-  //Functioalitate edit nume fisier in galerie
+  //la edit nume - sa nu se poate edita inafara de - [...].extensie - valoarea pt input sa fie taiata - apoi se lipeste si partea a doua 
+  //cand se salveaza noul nume 
+
   //in API restrictionat maximul de GB pt video  --extract file size inainte de dowwnload
   //daca start time == end time atunci end time + 1
   //in API restrictionat doar pt youtube/piped/tiktok/facebook
   //facut iconita pt aplicatie, pus in playstore
   //configurat server nginx 
+  //dupa ce se descarca  (tot clipul, nu cut) sa se stearga si de pe server
 //************************************************************//
 //************************************************************//
 //************************************************************//
+//buguri: 
+//daca titlul clipului contine '|' pe server nu se va salva asa, si va da eroare cum ca fila nu exista.
 
   useEffect(
     () => {

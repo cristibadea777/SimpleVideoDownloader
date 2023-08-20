@@ -12,7 +12,6 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
 
     const [videoURI,    setVideoURI]  = useState()
     const [videoName,   setVideoName] = useState('')
-    const [file,        setFile]      = useState('')
     const [index,       setIndex]     = useState('')
 
     const changeOrientation = async () => {
@@ -28,20 +27,21 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
         setVideoName(item.titlu.split(' [')[0])
     }
 
-    const handlePressButonDelete = (file, index) => {
-        setFile(file)
+    const handlePressButonDelete = (videoURI, index) => {
+        setVideoURI(videoURI)
         setIndex(index)
         setVisibilityModalStergere(true)
     }
 
-    const handlePressButonedit = (file, index, title) => {
-        setFile(file)
+    const handlePressButonEdit = (uri, title, index) => {
+        setVideoURI(uri)
+        setVideoName(title)
         setIndex(index)
         setVisibilityModalEdit(true)
     }
 
-    const handlePressButonShare = (file) => {
-        Sharing.shareAsync(file)
+    const handlePressButonShare = (uri) => {
+        Sharing.shareAsync(uri)
     }
 
     const afisareListaClipuri = () => {
@@ -83,7 +83,7 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                                     onPress={
                                         event => {
                                             event.stopPropagation()
-                                            handlePressButonedit(item.uri, index)
+                                            handlePressButonEdit(item.uri, item.titlu, index)
                                         }
                                     }
                                 >
@@ -121,7 +121,6 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                 styles                        = {stylesModale}
                 videoURI                      = {videoURI}
                 videoName                     = {videoName}
-                file                          = {file}
                 index                         = {index}
                 listaClipuri                  = {listaClipuri}
                 setListaClipuri               = {setListaClipuri}
@@ -133,7 +132,6 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
                 styles                        = {stylesModale}
                 videoURI                      = {videoURI}
                 videoName                     = {videoName}
-                file                          = {file}
                 index                         = {index}
                 listaClipuri                  = {listaClipuri}
                 setListaClipuri               = {setListaClipuri}
@@ -143,5 +141,4 @@ const ContainerGalerie = ({ listaClipuri, styles, setListaClipuri, stylesModale,
         </ScrollView>
     )
 }
-
 export default ContainerGalerie
