@@ -1,16 +1,38 @@
 from flask import Flask, render_template, make_response, request
-import yt_dlp
 from flask_cors import CORS
-
 import io
 import subprocess
-app = Flask(__name__, static_folder='static')
+import re
 
-#pornit aplicatia pe 127.0.0.1:5000 --- $ python -m flask --app .\src\app.py run  
+
+app = Flask(__name__, static_folder='static')
+#activat venv cu $ .\venv\Scripts\activate
+#pornit aplicatia pe 127.0.0.1:5000 cu $ python -m flask --app .\src\app.py run  
+
 
 #pt cross origin 
 #intr-un CORS, doar headerul content-type este expus, celelalte trebuie expuse manual daca vrem sa le folosi
 CORS(app, expose_headers=['Filename'])
+
+
+def linkuriAcceptate(link):
+    youtube_pattern =   r'^https?:\/\/(www\.)?(youtube\.com\/|youtu\.be\/)'
+    tiktok_pattern =    r'^https?:\/\/(www\.)?tiktok\.com\/@[^\/]+\/video\/\d+'
+    instagram_pattern = r'^https?:\/\/(www\.)?instagram\.com\/'
+    piped_pattern =     r'^https?:\/\/piped\.[a-zA-Z]+\.[a-zA-Z]+\/watch\?v=[a-zA-Z0-9_-]+'
+    odysee_pattern =    r'^https?:\/\/(www\.)?odysee\.com\/.*'
+    if(
+        re.match(youtube_pattern, link)     or
+        re.match(tiktok_pattern, link)      or
+        re.match(instagram_pattern, link)   or
+        re.match(piped_pattern, link)       or 
+        re.match(odysee_pattern, link)      
+    ):
+        return True
+    else:
+        return False
+    
+
 
 @app.route("/", methods=['GET'])
 def home():
@@ -19,7 +41,6 @@ def home():
 
 
 #yt-dlp trebuie instalat in virtual environment
-
 @app.route("/download/", methods=['POST'])
 def download_cut():
     if request.method == 'POST':
@@ -27,8 +48,10 @@ def download_cut():
         url   = request.form.get('link')
         start = request.form.get('start')
         end   = request.form.get('end')
-        print("End: " + str(end))
-        print("Start: " + str(start))
+
+        if not linkuriAcceptate(url):
+            return make_response("Link not accepted", 400)
+        
         try:
             #preluare nume fisier pe care il vom manipula 
             filename_process = subprocess.run(
@@ -40,6 +63,18 @@ def download_cut():
             ) 
             filename = filename_process.stdout.strip() #procesul va printa numele fisierului, din output il extragem
             print("Filename: " + filename)
+
+            filesize_process = subprocess.run(
+                ["yt-dlp", url, "-O", "%(requested_formats.0.filesize+requested_formats.1.filesize)d"],
+                check=True, 
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+            filesize = filesize_process.stdout.strip()
+            print("File size: " + filesize)
+            if int(filesize) > 1073741824:
+                return make_response("Filesize bigger than 1GB", 400)
 
             #descarcare / descarcare si taiere clip pe server (in disk)
             if start and end:
@@ -68,41 +103,6 @@ def download_cut():
             return make_response(str(e), 500)
     
     return make_response("Invalid request", 400)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
