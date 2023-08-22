@@ -18,7 +18,6 @@ const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo
         return "WRONG TIME INPUT"
     if(parseInt(secundeStart) === parseInt(secundeEnd))
         secundeEnd = secundeEnd + 1
-    console.log(secundeEnd)
     if(visibilityCutVideo){
         formData.append('start', secundeStart)
         formData.append('end', secundeEnd)

@@ -12,8 +12,9 @@ const initializareFolderGalerie = async (folderGalery) => {
 }
 
 const afisareContinutDirector = async () => {
-    const directoryContents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-    console.log("Director curent:")
+    const directorCurent = FileSystem.documentDirectory
+    const directoryContents = await FileSystem.readDirectoryAsync(directorCurent)
+    console.log("Director curent: " + directorCurent + "---")
     directoryContents.map( 
         (item) => { console.log("--- " + item) }
     )
@@ -21,7 +22,7 @@ const afisareContinutDirector = async () => {
 
 const afisareContinutFolderGalerie = async (folderGalery) => {
     const directoryContents = await FileSystem.readDirectoryAsync(folderGalery)
-    console.log("Folder galerie:")
+    console.log("Folder galerie: " + folderGalery + "---")
     directoryContents.map( 
         (item) => { console.log("Video: --- " + item) }
     )
@@ -68,7 +69,6 @@ const addElementListaClipuri = (listaClipuri, fileName, fileURI) => {
 }
 
 const populareListaClipuriGalerie = async (folderGalery, listaClipuri) => {
-    console.log(listaClipuri)
     directoryContents = await FileSystem.readDirectoryAsync(folderGalery)
     directoryContents.map( 
         (item) => { 
@@ -80,7 +80,7 @@ const populareListaClipuriGalerie = async (folderGalery, listaClipuri) => {
             ) 
         }
     )
-    console.log(JSON.stringify(listaClipuri, null, 2))
+    //console.log(JSON.stringify(listaClipuri, null, 2))
 }
 export {    initializareFolderGalerie, afisareContinutDirector, afisareContinutFolderGalerie, 
             populareListaClipuriGalerie, removeElementListaClipuri, addElementListaClipuri, 

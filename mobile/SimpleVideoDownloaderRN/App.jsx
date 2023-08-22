@@ -17,6 +17,14 @@ import ContainerGalerie from './components/galerie/ContainerGalerie'
 import generateStiluriGalerie from './components/galerie/Styles'
 import { generareStiluriModale } from './components/modale/Styles'
 
+//************************************************************//
+//************************************************************//
+//TO DO 
+  //pus in playstore
+  //configurat server nginx 
+//************************************************************//
+//************************************************************//
+
 export default function App() {
   
   LogBox.ignoreLogs(['new NativeEventEmitter']) //ceva warning aparut dupa importarea expo-screen-orientation (in Videoclip.jsx)
@@ -53,23 +61,6 @@ export default function App() {
 
   const [visibilityModalStergere, setVisibilityModalStergere] = useState(false)
   const [visibilityModalEdit,     setVisibilityModalEdit]     = useState(false)
-
-
-//************************************************************//
-//************************************************************//
-//************************************************************//
-//TO DO 
-  //pus in playstore
-  //configurat server nginx 
-//************************************************************//
-//************************************************************//
-//************************************************************//
-//probleme: 
-//yt-dlp
-  //start = end -> nu o sa descarce bine. descarca daca am incrementa end time cu 1
-//************************************************************//
-//************************************************************//
-//************************************************************//
 
   useEffect(
     () => {
