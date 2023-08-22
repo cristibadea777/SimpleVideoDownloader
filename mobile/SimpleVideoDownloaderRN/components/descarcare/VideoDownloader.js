@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
 import { addElementListaClipuri } from '../galerie/Galerie';
 
-const api = 'https://918e-5-14-148-122.ngrok-free.app/'
+const api = 'https://3d0e-86-124-125-24.ngrok-free.app/'
 
 const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo,secundeStart, secundeEnd} ) => {
     setStareDescarcare("Downloading...")
@@ -13,7 +13,12 @@ const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo
     const formData = new FormData()
     formData.append('link', link) 
     //daca visibilityCutVideo este false atunci se descarca tot clipul (serverul se uita daca exista sau nu in body start, end), 
-    //altfel se descarca doar sectiunea indicata 
+    //altfel se descarca doar sectiunea indicata
+    if(parseInt(secundeStart) > parseInt(secundeEnd))        
+        return "WRONG TIME INPUT"
+    if(parseInt(secundeStart) === parseInt(secundeEnd))
+        secundeEnd = secundeEnd + 1
+    console.log(secundeEnd)
     if(visibilityCutVideo){
         formData.append('start', secundeStart)
         formData.append('end', secundeEnd)
@@ -35,8 +40,12 @@ const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo
 
 const salveazaVideoAsync = async ( {link, folderGalery, setFileName, setFileURI, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd, listaClipuri, setListaClipuri} ) => {    
     const videoResponse = await descarcaVideoAsync({link, setStareDescarcare, visibilityCutVideo, secundeStart, secundeEnd})
+    if(videoResponse === "WRONG TIME INPUT"){
+        setStareDescarcare("Wrong time input")
+        return 
+    } 
     const newFileName = videoResponse.headers.get('Filename')
-    const newFileURI  = `${folderGalery}${newFileName}`//API-ul trimite si extensia, ca parte ca numelui fisierului
+    const newFileURI  = `${folderGalery}${newFileName}`//API-ul trimite si extensia, ca parte a numelui fisierului
     //citire a raspunsului video si salvare cu writeAsStringAsync
     setStareDescarcare("Saving...")
     const file_reader   = new FileReader()

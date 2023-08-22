@@ -75,12 +75,16 @@ def download_cut():
             print("File size: " + filesize)
             if int(filesize) > 1073741824:
                 return make_response("Filesize bigger than 1GB", 400)
-
+            
             #descarcare / descarcare si taiere clip pe server (in disk)
+            #fortez yt-dlp sa descarce fisierul exact cu numele clipului, 
+            #altfel daca exista caractere speciale '!, ?, $, etc' sau caractere din alte limbi
+            #ar fi fost probleme la gasirea fisierului, pentru ca yt-dlp le salva doar cu alfabetul latin si fara alte caractere speciale
             if start and end:
-                command = f"yt-dlp {url} --download-sections *{start}-{end} --force-keyframes-at-cuts"
+                filename = f"CUT{start}{end}_" + filename #pus si _secundele in caz ca se taie mai multe secvente din acelas clip
+                command = f"yt-dlp {url} --download-sections *{start}-{end} --force-keyframes-at-cuts --output \"{filename}\""
             else:
-                command = f"yt-dlp {url}"
+                command = f"yt-dlp {url} --output \"{filename}\""
             subprocess.run(command, check=True) #check=True - pt a termina comanda si a ridica exceptie daca exista
 
             #citire clip descarcat, stocare in video_data (in RAM) 
@@ -88,7 +92,7 @@ def download_cut():
                 video_data = video_file.read()
 
             #stergere clip de pe disk
-            subprocess.run(f"rm '{filename}'", check=True)
+            subprocess.run(f"rm \"{filename}\"", check=True)
                   
             headers = {
                 'Content-Type': 'video/mp4',

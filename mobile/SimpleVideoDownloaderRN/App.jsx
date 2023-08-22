@@ -59,7 +59,7 @@ export default function App() {
 //************************************************************//
 //************************************************************//
 //TO DO 
-  //facut iconita pt aplicatie, pus in playstore
+  //pus in playstore
   //configurat server nginx 
 //************************************************************//
 //************************************************************//
@@ -67,8 +67,6 @@ export default function App() {
 //probleme: 
 //yt-dlp
   //start = end -> nu o sa descarce bine. descarca daca am incrementa end time cu 1
-  //uneori nu face CUT cum trebuie chiar daca start != end
-//daca titlul clipului contine '|' pe server nu se va salva asa, si va da eroare cum ca fila nu exista.
 //************************************************************//
 //************************************************************//
 //************************************************************//
@@ -134,7 +132,7 @@ export default function App() {
             oraEnd                      = {oraEnd}
             minutStart                  = {minutStart}
             minutEnd                    = {minutEnd}
-            qsecundaStart               = {secundaStart}
+            secundaStart                = {secundaStart}
             secundaEnd                  = {secundaEnd}
             listaClipuri                = {listaClipuri}
             setListaClipuri             = {setListaClipuri}
