@@ -8,6 +8,12 @@ const ContainerDescarcare = (   {styles, stareDescarcare, link, folderGalery, se
                                 visibilityCutVideo, oraStart, oraEnd, minutStart, minutEnd, secundaStart, secundaEnd, listaClipuri, setListaClipuri} ) => {
 
     const handlePressButonDescarca = async () => {
+        
+        if(link.match("youtube.com") || link.match("youtu.be")){
+            setStareDescarcare("Youtube link not allowed")
+            return 
+        }
+
         setFileURI(null)
         setFileName(null)
         let secundeStart = calculeazaSecunde(parseInt(oraStart, 10) || 0, parseInt(minutStart, 10) || 0, parseInt(secundaStart, 10) || 0)

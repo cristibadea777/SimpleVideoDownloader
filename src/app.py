@@ -21,6 +21,9 @@ def linkuriAcceptate(link):
     instagram_pattern = r'^https?:\/\/(www\.)?instagram\.com\/'
     piped_pattern =     r'^https?:\/\/piped\.[a-zA-Z]+\.[a-zA-Z]+\/watch\?v=[a-zA-Z0-9_-]+'
     odysee_pattern =    r'^https?:\/\/(www\.)?odysee\.com\/.*'
+    #
+    #de adaugat dailymotion, vimeo, 
+    #
     if(
         re.match(youtube_pattern, link)     or
         re.match(tiktok_pattern, link)      or
