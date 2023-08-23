@@ -2,7 +2,7 @@
   "expo": {
     "name": "Video Downloader",
     "slug": "SimpleVideoDownloaderRN",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,14 +25,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "windowSoftInputMode": "resize",
-        "versionCode": 2,
+        "windowSoftInputMode": "resize"
       },
       "permissions": [
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.ACCESS_MEDIA_LOCATION"
       ],
+      "versionCode": 2,
       "package": "com.cristiiy.SimpleVideoDownloaderRN"
     },
     "web": {
