@@ -4,6 +4,13 @@ import io
 import subprocess
 import re
 
+################################
+################################
+##TO DO
+    #de setat limita de requesturi pe minut
+##
+################################
+################################
 
 app = Flask(__name__, static_folder='static')
 #activat venv cu $ .\venv\Scripts\activate
@@ -16,31 +23,15 @@ CORS(app, expose_headers=['Filename'])
 
 
 def linkuriAcceptate(link):
-    youtube_pattern =   r'^https?:\/\/(www\.)?(youtube\.com\/|youtu\.be\/)'
-    tiktok_pattern =    r'^https?:\/\/(www\.)?tiktok\.com\/@[^\/]+\/video\/\d+'
-    instagram_pattern = r'^https?:\/\/(www\.)?instagram\.com\/'
-    piped_pattern =     r'^https?:\/\/piped\.[a-zA-Z]+\.[a-zA-Z]+\/watch\?v=[a-zA-Z0-9_-]+'
-    odysee_pattern =    r'^https?:\/\/(www\.)?odysee\.com\/.*'
-    #
-    #de adaugat dailymotion, vimeo, 
-    #
-    if(
-        re.match(youtube_pattern, link)     or
-        re.match(tiktok_pattern, link)      or
-        re.match(instagram_pattern, link)   or
-        re.match(piped_pattern, link)       or 
-        re.match(odysee_pattern, link)      
-    ):
+    pattern =   r".*facebook*.|.*tiktok*.|.*instagram*.|.*dailymotion*.|.*odysee*.|.*piped*.|.*vimeo*."
+    if(re.match(pattern, link) ):
         return True
     else:
         return False
-    
-
 
 @app.route("/", methods=['GET'])
 def home():
     return render_template("index.html")
-
 
 
 #yt-dlp trebuie instalat in virtual environment
@@ -53,8 +44,9 @@ def download_cut():
         end   = request.form.get('end')
 
         if not linkuriAcceptate(url):
-            return make_response("Link not accepted", 400)
-        
+            #return make_response("Link not accepted", 400)
+            url = 'https://youtu.be/' + url #voodoo pt a da bypass restrictiei din frontend
+
         try:
             #preluare nume fisier pe care il vom manipula 
             filename_process = subprocess.run(
@@ -65,10 +57,13 @@ def download_cut():
                 text=True
             ) 
             filename = filename_process.stdout.strip() #procesul va printa numele fisierului, din output il extragem
-            print("Filename: " + filename)
+
+            #pt clipurile de TikTok, care au hashtaguri fara numar
+            filename = re.sub(r'#\w+\s*', '', filename)
+            print(filename)
 
             filesize_process = subprocess.run(
-                ["yt-dlp", url, "-O", "%(requested_formats.0.filesize+requested_formats.1.filesize)d"],
+                ["yt-dlp", url, "-O", "%(filesize,filesize_approx)s"],
                 check=True, 
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
