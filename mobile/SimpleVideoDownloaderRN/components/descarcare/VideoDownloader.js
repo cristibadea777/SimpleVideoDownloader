@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
 import { addElementListaClipuri } from '../galerie/Galerie';
 
-const api = 'https://3d0e-86-124-125-24.ngrok-free.app/'
+const api = 'https://simplevideodownloader.serveo.net/'
 
 const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo,secundeStart, secundeEnd} ) => {
     setStareDescarcare("Downloading...")

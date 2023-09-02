@@ -8,9 +8,19 @@ import re
 ################################
 ##TO DO
     #de setat limita de requesturi pe minut
+    #https://jerrington.me/posts/2019-01-29-self-hosted-ngrok.html
+    #https://www.youtube.com/watch?v=BpcK5jON6Cg
+    #https://www.youtube.com/watch?v=KWIIPKbdxD0&t=810s
+    #serveo.ne -- ca ngrok
 ##
 ################################
 ################################
+
+#Din faza de development in faza de productie
+#Aplicatia trebuia pusa pe un server de productie
+#Gunicorn - Webserver Gateway Interface - produce interfata pentru aplicatia Flask
+#Nginx - proxy server 
+#Userul acceseaza serverul proxy Nginx, care apoi se foloseste de Gunicorn, care la randul lui va accesa aplicatia si va fi trimisa userului 
 
 app = Flask(__name__, static_folder='static')
 #activat venv cu $ .\venv\Scripts\activate
@@ -91,7 +101,7 @@ def download_cut():
 
             #stergere clip de pe disk
             subprocess.run(f"rm \"{filename}\"", check=True)
-                  
+                   
             headers = {
                 'Content-Type': 'video/mp4',
                 'Filename': filename 
