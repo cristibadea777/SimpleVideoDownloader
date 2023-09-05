@@ -2,12 +2,12 @@ import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
 import { addElementListaClipuri } from '../galerie/Galerie';
 
-const api = 'https://simplevideodownloader.serveo.net/'
+const api = 'https://simplevideodownloader.serveo.net'
 
 const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo,secundeStart, secundeEnd} ) => {
     setStareDescarcare("Downloading...")
     //endpoint-ul pt download
-    let apiEndpoint = api + '/download/'
+    apiEndpoint = api + '/download/'
     //data formularului ce se trimite in cererea catre API
     //link se primiste ca props de la aplicatie 
     const formData = new FormData()
