@@ -3,6 +3,7 @@ import * as FileSystem from 'expo-file-system';
 import { addElementListaClipuri } from '../galerie/Galerie';
 
 const apiEndpoint = 'https://simplevideodownloader.serveo.net/download/'
+//THEY GLOW IN THE DARK
 
 const descarcaVideoAsync = async ( {link, setStareDescarcare, visibilityCutVideo,secundeStart, secundeEnd} ) => {
     setStareDescarcare("Downloading...")    
